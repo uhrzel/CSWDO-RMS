@@ -317,13 +317,16 @@ class ClientController extends Controller
             }
 
             // Handle the monthly_expenses as JSON data
-            $client->monthly_expenses = json_encode([
-                'Electricity' => $request->input('electricity', ''),
-                'Water' => $request->input('water', ''),
-                'Rent' => $request->input('rent', ''),
-                'Other' => $request->input('other', '')
-            ]);
+            $monthlyExpenses = json_decode($client->monthly_expenses, true);
 
+            // Update the monthly expenses fields, keeping existing values if new values are empty
+            $monthlyExpenses['Electricity'] = $request->input('electricity', $monthlyExpenses['Electricity']);
+            $monthlyExpenses['Water'] = $request->input('water', $monthlyExpenses['Water']);
+            $monthlyExpenses['Rent'] = $request->input('rent', $monthlyExpenses['Rent']);
+            $monthlyExpenses['Other'] = $request->input('other', $monthlyExpenses['Other']);
+
+            // Re-encode the updated monthly expenses
+            $client->monthly_expenses = json_encode($monthlyExpenses);
             // Handle appliances field if it's an array
             if ($request->has('appliances')) {
                 $client->appliances = json_encode($request->input('appliances', []));
