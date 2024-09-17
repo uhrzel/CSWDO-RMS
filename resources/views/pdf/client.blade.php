@@ -622,13 +622,30 @@
 
 
         <div class="form-section">
-            <label>6. Monthly Expenses</label> <br><br>
+            <label>6. Monthly Expenses</label>
+            <br><br>
             <div>
-                <div><label>a. Electricity</label><input type="text" value="{{ $client->monthly_expenses }}" class="input-line" style="width: 40%;" /></div>
-                <div><label>b. Water</label><input type="text" class="input-line" style="width: 40%;" /></div>
-                <div><label>c. House Rent</label><input type="text" class="input-line" style="width: 40%;" /></div>
-                <div><label>d. Others</label><input type="text" class="input-line" style="width: 40%;" /></div>
+                <div>
+                    <label>a. Electricity</label>
+                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Electricity ?? '' }}" class="input-line" style="width: 40%;" />
+                </div>
+                <br>
+                <div>
+                    <label>b. Water</label>
+                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Water ?? '' }}" class="input-line" style="width: 40%;" />
+                </div>
+                <br>
+                <div>
+                    <label>c. House Rent</label>
+                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Rent ?? '' }}" class="input-line" style="width: 40%;" />
+                </div>
+                <br>
+                <div>
+                    <label>d. Others</label>
+                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Other ?? '' }}" class="input-line" style="width: 40%;" />
+                </div>
             </div>
+
         </div>
 
         <div class="form-section">
