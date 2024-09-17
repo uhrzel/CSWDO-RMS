@@ -949,7 +949,7 @@
 							</div>
 							<div class="form-group">
 								<label for="problem_identification">Problem Identification</label>
-								<select name="problem_identification" class="form-control" id="problem_identification" style="max-width: 500px; width: 100%;">
+								<select name="problem_identification" class="form-control" id="problem_identification" style="max-width: 500px; width: 100%;" {{ $client->problem_identification == 'Done' ? 'disabled' : '' }}>
 									<option value="" disabled selected>Select Problem Identification</option>
 									<option value="Done" {{ $client->problem_identification == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->problem_identification == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
@@ -1255,7 +1255,7 @@
 							</div>
 							<div class="col-md-3 form-group">
 								<label for="data_gather">Data Gathering</label>
-								<select name="data_gather" class="form-control" id="data_gather" style="max-width: 500px; width: 100%;">
+								<select name="data_gather" class="form-control" id="data_gather" style="max-width: 500px; width: 100%;" {{ $client->data_gather == 'Done' ? 'disabled' : '' }}>
 									<option value="" disabled selected>Select Data Gathering</option>
 									<option value="Done" {{ $client->data_gather == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->data_gather == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
@@ -1268,7 +1268,7 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="assessment">Assessment</label>
-								<select name="assessment" class="form-control" id="assessment" style="max-width: 500px; width: 100%;">
+								<select name="assessment" class="form-control" id="assessment" style="max-width: 500px; width: 100%;" {{ $client->assessment == 'Done' ? 'disabled' : '' }}>
 									<option value="" disabled selected>Select Assessment</option>
 									<option value="Done" {{ $client->assessment == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->assessment == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
@@ -1302,7 +1302,7 @@
 
 							<div class="col-md-10 form-group">
 								<label for="eval">Evaluation</label>
-								<select name="eval" class="form-control" id="eval" style="max-width: 500px; width: 100%;">
+								<select name="eval" class="form-control" id="eval" style="max-width: 500px; width: 100%;" {{ $client->eval == 'Done' ? 'disabled' : '' }}>
 									<option value="" disabled selected>Select Evaluation</option>
 									<option value="Done" {{ $client->eval == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->eval == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
