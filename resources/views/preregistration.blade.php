@@ -70,22 +70,22 @@
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter First Name" Required>
+                                    <input type="text" name="first_name" class="form-control shadow-sm" id="first_name" placeholder="Enter First Name" Required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter Last Name" Required>
+                                    <input type="text" name="last_name" class="form-control shadow-sm" id="last_name" placeholder="Enter Last Name" Required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="middle">Middle Name</label>
-                                    <input type="text" name="middle" class="form-control" id="middle" placeholder="Enter Middle Name" Required>
+                                    <input type="text" name="middle" class="form-control shadow-sm" id="middle" placeholder="Enter Middle Name" Required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="suffix">Suffix</label>
-                                    <select name="suffix" class="form-control" id="suffix" required>
+                                    <select name="suffix" class="form-control shadow-sm" id="suffix" required>
                                         <option value="" selected disabled>Select Suffix</option>
                                         <option value="Jr.">Jr. (Junior)</option>
                                         <option value="Sr.">Sr. (Senior)</option>
@@ -97,12 +97,12 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="date_of_birth">Date of Birth</label>
-                                    <input type="date" name="date_of_birth" class="form-control" id="date_of_birth" placeholder="Enter Date of Birth" required>
+                                    <input type="date" name="date_of_birth" class="form-control shadow-sm" id="date_of_birth" placeholder="Enter Date of Birth" required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="age">Age</label>
-                                    <input type="text" name="age" class="form-control" id="age" placeholder="Age" readonly>
+                                    <input type="text" name="age" class="form-control shadow-sm" id="age" placeholder="Age" readonly>
                                 </div>
 
                                 <script>
@@ -123,7 +123,7 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="sex">Sex</label>
-                                    <select name="sex" class="form-control" id="sex" Required>
+                                    <select name="sex" class="form-control shadow-sm" id="sex" Required>
                                         <option value="" selected disabled>Select Sex</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -133,12 +133,12 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="pob">Place of Birth</label>
-                                    <input type="text" name="pob" class="form-control" id="pob" placeholder="Enter Place of Birth" Required>
+                                    <input type="text" name="pob" class="form-control shadow-sm" id="pob" placeholder="Enter Place of Birth" Required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="educational_attainment">Educational Attainment</label>
-                                    <select name="educational_attainment" class="form-control" id="educational_attainment" Required>
+                                    <select name="educational_attainment" class="form-control shadow-sm" id="educational_attainment" Required>
                                         <option value="" disabled selected>Select Educational Attainment</option>
                                         <option value="Grade 1">Grade 1</option>
                                         <option value="Grade 2">Grade 2</option>
@@ -164,7 +164,7 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="civil_status">Civil Status</label>
-                                    <select name="civil_status" class="form-control" id="civil_status" placeholder="Select Civil Status" Required>
+                                    <select name="civil_status" class="form-control shadow-sm" id="civil_status" placeholder="Select Civil Status" Required>
                                         <option value="" selected disabled>Select Civil Status</option>
                                         <option value="Single">Single</option>
                                         <option value="Married">Married</option>
@@ -176,7 +176,7 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="religion">Religion</label>
-                                    <select name="religion" class="form-control" id="religion" onchange="toggleOtherReligion()" Required>
+                                    <select name="religion" class="form-control shadow-sm" id="religion" onchange="toggleOtherReligion()" Required>
                                         <option value="" selected disabled>Select Religion</option>
                                         <option value="Catholic">Catholic</option>
                                         <option value="Christianity">Christianity</option>
@@ -192,13 +192,13 @@
 
                                 <div class="col-md-4 mb-3" id="otherReligion" style="display: none;">
                                     <label for="other_religion">Other Religion</label>
-                                    <input type="text" name="other_religion" class="form-control" id="other_religion">
+                                    <input type="text" name="other_religion" class="form-control shadow-sm" id="other_religion">
                                 </div>
 
 
                                 <div class="col-md-4 mb-3">
                                     <label for="nationality">Nationality</label>
-                                    <select name="nationality" class="form-control" id="nationality" onchange="toggleOtherNationality()" Required>
+                                    <select name="nationality" class="form-control shadow-sm" id="nationality" onchange="toggleOtherNationality()" Required>
                                         <option value="" selected disabled>Select Nationality</option>
                                         <option value="Filipino">Filipino</option>
                                         <option value="American">American</option>
@@ -212,11 +212,11 @@
 
                                 <div class="col-md-4 mb-3" id="otherNationality" style="display: none;">
                                     <label for="other_nationality">Other Nationality</label>
-                                    <input type="text" name="other_nationality" class="form-control" id="other_nationality">
+                                    <input type="text" name="other_nationality" class="form-control shadow-sm" id="other_nationality">
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="monthly_income">Monthly Income</label>
-                                    <select class="form-control" id="monthly_income" name="monthly_income" Required>
+                                    <select class="form-control shadow-sm" id="monthly_income" name="monthly_income" Required>
                                         <option value="" disabled selected>Select Monthly Income</option>
                                         <option value="No Income">No Income</option>
                                         <option value="100 PHP - 500 PHP">100 PHP - 500 PHP</option>
@@ -235,26 +235,26 @@
 
                                 <div class="col-md-4 mb-3">
                                     <label for="building_number">Building / House / Block No.</label>
-                                    <input type="text" class="form-control" id="building_number" name="building_number" placeholder="E.g. Blk 123 or No. 4" required>
+                                    <input type="text" class="form-control shadow-sm" id="building_number" name="building_number" placeholder="E.g. Blk 123 or No. 4" required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="street_name">Street No. / Name</label>
-                                    <input type="text" class="form-control" id="street_name" name="street_name" placeholder="1st Avenue" required>
+                                    <input type="text" class="form-control shadow-sm" id="street_name" name="street_name" placeholder="1st Avenue" required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="barangay">Barangay</label>
-                                    <input type="text" class="form-control" id="barangay" name="barangay" placeholder="E.g. Bagumbayan" required>
+                                    <input type="text" class="form-control shadow-sm" id="barangay" name="barangay" placeholder="E.g. Bagumbayan" required>
                                 </div>
 
                                 <div class="col-md-4 mb-3">
                                     <label for="occupation">Occupation</label>
-                                    <input type="text" name="occupation" class="form-control" id="occupation" placeholder="Enter Occupation" Required>
+                                    <input type="text" name="occupation" class="form-control shadow-sm" id="occupation" placeholder="Enter Occupation" Required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="house_structure">House Structure</label>
-                                    <select name="house_structure" class="form-control" id="house_structure" placeholder="Select House Structure" Required>
+                                    <select name="house_structure" class="form-control shadow-sm" id="house_structure" placeholder="Select House Structure" Required>
                                         <option value="" selected disabled>Select House Structure</option>
                                         <option value="Wood">Wood</option>
                                         <option value="Semi-concrete">Semi-concrete</option>
@@ -264,7 +264,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="floor">Floor/Lot Area (sqm)</label>
-                                    <select name="floor" class="form-control" id="floor" Required>
+                                    <select name="floor" class="form-control shadow-sm" id="floor" Required>
                                         <option value="" disabled selected>Select Floor/Lot Area</option>
                                         <option value="0-50">0-50 sqm</option>
                                         <option value="51-100">51-100 sqm</option>
@@ -278,16 +278,16 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="source_of_referral">Source of Referral</label>
-                                    <input type="text" name="source_of_referral" class="form-control" id="source_of_referral" placeholder="Enter Source of Referral" Required>
+                                    <input type="text" name="source_of_referral" class="form-control shadow-sm" id="source_of_referral" placeholder="Enter Source of Referral" Required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="contact_number">Contact Number</label>
-                                    <input type="tel" name="contact_number" class="form-control" id="contact_number" placeholder="Enter Contact Number" oninput="this.value=this.value.replace(/[^0-9+#*]/g,'');" required>
+                                    <input type="tel" name="contact_number" class="form-control shadow-sm" id="contact_number" placeholder="Enter Contact Number" oninput="this.value=this.value.replace(/[^0-9+#*]/g,'');" required>
                                     <div class="invalid-feedback">Invalid contact number. Please enter only numbers, +, *, and #.</div>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="indicate">Indicate If The Applicant Is</label>
-                                    <select name="indicate" class="form-control" id="indicate" placeholder="Indicate If The Client Is" Required>
+                                    <select name="indicate" class="form-control shadow-sm" id="indicate" placeholder="Indicate If The Client Is" Required>
                                         <option value="" selected disabled>Indicate If The Client Is</option>
                                         <option value="House Owner">House Owner</option>
                                         <option value="House Renter">House Renter</option>
@@ -297,7 +297,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="number_of_rooms">Number Of Rooms</label>
-                                    <select name="number_of_rooms" class="form-control" id="number_of_rooms" Required>
+                                    <select name="number_of_rooms" class="form-control shadow-sm" id="number_of_rooms" Required>
                                         <option value="" disabled selected>Select Number Of Rooms</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -311,57 +311,68 @@
                                         <option value="10">10</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="electricity">Electricity</label>
-                                    <select name="electricity" class="form-control" id="electricity">
-                                        <option value="" disabled selected>Select Amount</option>
-                                        <option value="100-500">100-500</option>
-                                        <option value="500-1000">500-1000</option>
-                                        <option value="1000-2000">1000-2000</option>
-                                        <option value="2000-5000">2000-5000</option>
-                                        <option value="5000-10000">5000-10000</option>
-                                    </select>
+
+
+                                <div class="row">
+                                    <h3>Monthly Expense:</h3>
+                                    <!-- Electricity -->
+                                    <div class="col-md-3 mb-3">
+                                        <label for="electricity">Electricity</label>
+                                        <select name="electricity" class="form-control shadow-sm" id="electricity">
+                                            <option value="" disabled selected>Select Amount</option>
+                                            <option value="100-500">100-500</option>
+                                            <option value="500-1000">500-1000</option>
+                                            <option value="1000-2000">1000-2000</option>
+                                            <option value="2000-5000">2000-5000</option>
+                                            <option value="5000-10000">5000-10000</option>
+                                        </select>
+                                    </div>
+                                    <!-- Water -->
+                                    <div class="col-md-3 mb-3">
+                                        <label for="water">Water</label>
+                                        <select name="water" class="form-control shadow-sm" id="water">
+                                            <option value="" disabled selected>Select Amount</option>
+                                            <option value="100-500">100-500</option>
+                                            <option value="500-1000">500-1000</option>
+                                            <option value="1000-2000">1000-2000</option>
+                                            <option value="2000-5000">2000-5000</option>
+                                            <option value="5000-10000">5000-10000</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label for="water">Water</label>
-                                    <select name="water" class="form-control" id="water">
-                                        <option value="" disabled selected>Select Amount</option>
-                                        <option value="100-500">100-500</option>
-                                        <option value="500-1000">500-1000</option>
-                                        <option value="1000-2000">1000-2000</option>
-                                        <option value="2000-5000">2000-5000</option>
-                                        <option value="5000-10000">5000-10000</option>
-                                    </select>
+                                <div class="row">
+                                    <!-- Rent -->
+                                    <div class="col-md-3 mb-3">
+                                        <label for="rent">Rent</label>
+                                        <select name="rent" class="form-control shadow-sm" id="rent">
+                                            <option value="" disabled selected>Select Amount</option>
+                                            <option value="100-500">100-500</option>
+                                            <option value="500-1000">500-1000</option>
+                                            <option value="1000-2000">1000-2000</option>
+                                            <option value="2000-5000">2000-5000</option>
+                                            <option value="5000-10000">5000-10000</option>
+                                        </select>
+                                    </div>
+                                    <!-- Other -->
+                                    <div class="col-md-3 mb-3">
+                                        <label for="other">Other</label>
+                                        <select name="other" class="form-control shadow-sm" id="other">
+                                            <option value="" disabled selected>Select Amount</option>
+                                            <option value="100-500">100-500</option>
+                                            <option value="500-1000">500-1000</option>
+                                            <option value="1000-2000">1000-2000</option>
+                                            <option value="2000-5000">2000-5000</option>
+                                            <option value="5000-10000">5000-10000</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label for="rent">Rent</label>
-                                    <select name="rent" class="form-control" id="rent">
-                                        <option value="" disabled selected>Select Amount</option>
-                                        <option value="100-500">100-500</option>
-                                        <option value="500-1000">500-1000</option>
-                                        <option value="1000-2000">1000-2000</option>
-                                        <option value="2000-5000">2000-5000</option>
-                                        <option value="5000-10000">5000-10000</option>
-                                    </select>
-                                </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label for="other">Other</label>
-                                    <select name="other" class="form-control" id="other">
-                                        <option value="" disabled selected>Select Amount</option>
-                                        <option value="100-500">100-500</option>
-                                        <option value="500-1000">500-1000</option>
-                                        <option value="1000-2000">1000-2000</option>
-                                        <option value="2000-5000">2000-5000</option>
-                                        <option value="5000-10000">5000-10000</option>
-                                    </select>
-                                </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="type">Type Of House</label>
-                                    <select name="type" class="form-control" id="type" placeholder="Select Type" onchange="toggleOtherType()" Required>
+                                    <select name="type" class="form-control shadow-sm" id="type" placeholder="Select Type" onchange="toggleOtherType()" Required>
                                         <option value="" selected disabled>Select Type</option>
                                         <option value="Apartment">Apartment</option>
                                         <option value="Townhouse">Townhouse</option>
@@ -371,7 +382,7 @@
                                 </div>
                                 <div class="col-md-4 mb-3" id="otherType" style="display: none;">
                                     <label for="other_type">Other Type Of House</label>
-                                    <input type="text" name="other_type" class="form-control" id="other_type">
+                                    <input type="text" name="other_type" class="form-control shadow-sm" id="other_type">
 
                                 </div>
                                 <div class="row">
@@ -379,7 +390,7 @@
                                         <label for="appliances">Appliances</label>
                                         <div class="form-check-row" Required>
                                             <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" name="appliances[]" value="Refrigerator" id="refrigerator">
+                                                <input type="checkbox" class="form-check-input " name="appliances[]" value="Refrigerator" id="refrigerator">
                                                 <label class="form-check-label" for="refrigerator">Refrigerator</label>
                                             </div>
                                             <div class="form-check">
