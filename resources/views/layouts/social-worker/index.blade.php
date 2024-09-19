@@ -660,9 +660,48 @@
 
 							<div class="col-md-4 form-group">
 								<label for="barangay">Barangay</label>
-								<input type="text" class="form-control" name="barangay"
-									style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;"
+								<select class="form-control shadow-sm" id="barangay" name="barangay" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;"
 									value="{{$client->barangay}}" required>
+									<option value="">Select a Barangay</option>
+									<option value="Tanyag">Tanyag</option>
+									<option value="Bagumbayan">Bagumbayan</option>
+									<option value="Bambang">Bambang</option>
+									<option value="Calzada">Calzada</option>
+									<option value="Hagonoy">Hagonoy</option>
+									<option value="Ibayo-Tipas">Ibayo-Tipas</option>
+									<option value="Ligid-Tipas">Ligid-Tipas</option>
+									<option value="Lower Bicutan">Lower Bicutan</option>
+									<option value="Maharlika Village">Maharlika Village</option>
+									<option value="Napindan">Napindan</option>
+									<option value="Palingon">Palingon</option>
+									<option value="Santa Ana">Santa Ana</option>
+									<option value="Central Signal Village">Central Signal Village</option>
+									<option value="Tuktukan">Tuktukan</option>
+									<option value="Upper Bicutan">Upper Bicutan</option>
+									<option value="Ususan">Ususan</option>
+									<option value="Wawa">Wawa</option>
+									<option value="Western Bicutan">Western Bicutan</option>
+									<option value="Central Bicutan">Central Bicutan</option>
+									<option value="Fort Bonifacio">Fort Bonifacio</option>
+									<option value="Katuparan">Katuparan</option>
+									<option value="New Lower Bicutan">New Lower Bicutan</option>
+									<option value="North Daang Hari">North Daang Hari</option>
+									<option value="North Signal Village">North Signal Village</option>
+									<option value="Pinagsama">Pinagsama</option>
+									<option value="San Miguel">San Miguel</option>
+									<option value="South Daang Hari">South Daang Hari</option>
+									<option value="South Signal Village">South Signal Village</option>
+									<option value="Cembo">Cembo</option>
+									<option value="Comembo">Comembo</option>
+									<option value="East Rembo">East Rembo</option>
+									<option value="Pembo">Pembo</option>
+									<option value="Pitogo">Pitogo</option>
+									<option value="Post Proper Northside">Post Proper Northside</option>
+									<option value="Post Proper Southside">Post Proper Southside</option>
+									<option value="Rizal">Rizal</option>
+									<option value="South Cembo">South Cembo</option>
+									<option value="West Rembo">West Rembo</option>
+								</select>
 							</div>
 							<div class="col-md-4 mb-3">
 								<label for="date_of_birth">Date of Birth</label>
@@ -974,57 +1013,75 @@
 									<option value="poverty-program">Poverty Alleviation Program</option>
 								</select>
 
-								<!-- Burial Assistance Section -->
-								<div class="form-check-row hidden" id="burial-assistance-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = ['Burial', 'Financial', 'Funeral'];
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input service-checkbox" name="services[]" value="{{ $service }}" id="{{ strtolower($service) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower($service) }}-{{ $client->id }}">{{ $service }}</label>
-									</div>
-									@endforeach
+								<!-- Modal for Burial Assistance -->
+								<div class="modal fade" id="burial-assistance-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="burialAssistanceModalLabel-{{ $client->id }}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="burialAssistanceModalLabel-{{ $client->id }}">Burial Assistance Details</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<!-- Content from your PHP code -->
+												<?php
+												$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+												$clientServices = is_array($clientServices) ? $clientServices : [];
+												$services = ['Burial', 'Financial', 'Funeral'];
+												?>
+												@foreach($services as $service)
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input service-checkbox" name="services[]" value="{{ $service }}" id="{{ strtolower($service) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+													<label class="form-check-label" for="{{ strtolower($service) }}-{{ $client->id }}">{{ $service }}</label>
+												</div>
+												@endforeach
 
-									<!-- Additional Requirements -->
-									<div class="additional-requirements hidden" id="burial-assistance-requirements-{{ $client->id }}">
-										<h3>Requirements</h3>
-										<?php
-										$additionalServices = ['Crisis Intervention Unit = Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'];
-										?>
-										@foreach($additionalServices as $service)
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-											<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-												@if ($service === 'Crisis Intervention Unit = Valid ID')
-												Valid ID
-												@else
-												{{ $service }}
-												@endif
-											</label>
+												<!-- Additional Requirements -->
+												<div class="additional-requirements">
+													<h3>Requirements</h3>
+													<?php
+													$additionalServices = ['Crisis Intervention Unit = Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'];
+													?>
+													@foreach($additionalServices as $service)
+													<div class="form-check">
+														<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+														<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
+															@if ($service === 'Crisis Intervention Unit = Valid ID')
+															Valid ID
+															@else
+															{{ $service }}
+															@endif
+														</label>
+													</div>
+													@endforeach
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Save</button>
+											</div>
 										</div>
-										@endforeach
 									</div>
 								</div>
-
 								<script>
 									document.addEventListener('DOMContentLoaded', function() {
 										const serviceSelector = document.getElementById('service-selector-{{ $client->id }}');
 
 										function handleServiceChange(selectElement) {
 											const selectedService = selectElement.value;
+
 											const serviceSections = document.querySelectorAll('.form-check-row');
 											serviceSections.forEach(section => section.classList.add('hidden'));
 
-											const additionalRequirements = document.querySelectorAll('.additional-requirements');
-											additionalRequirements.forEach(req => req.classList.add('hidden'));
 
 											if (selectedService) {
-												document.getElementById(selectedService + '-{{ $client->id }}').classList.remove('hidden');
+												const serviceSection = document.getElementById(selectedService + '-{{ $client->id }}');
+												if (serviceSection) {
+													serviceSection.classList.remove('hidden');
+												}
+
 												if (selectedService === 'burial-assistance') {
-													document.getElementById('burial-assistance-requirements-{{ $client->id }}').classList.remove('hidden');
+													$('#burial-assistance-modal-{{ $client->id }}').modal('show');
 												}
 											}
 										}
