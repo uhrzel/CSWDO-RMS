@@ -162,7 +162,7 @@ class HomeController extends Controller
 
 
         $requirements = [
-            'Burial Assistance' => ['Burial', 'Financial', 'Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
+            'Burial Assistance' => ['Burial', 'Financial', 'Crisis Intervention Unit = Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
             'Crisis Intervention Unit' => ['Valid ID', 'Residence Certificate Or Barangay Clearance', 'Clinical Abstract/Medical Certificate', 'Police Report Or Incident Report', 'Funeral Contract And Registered Death Certificate. (if Applicable)'],
             'Solo Parent Services' => ['Solo Parent = Agency Referral', 'Residency Cert.', 'Medical Cert.', 'Billing Proof', 'Birth Cert.', 'ID Copy', 'Senior Citizen ID (60+)'],
             'Pre-marriage Counseling' => ['Pre-marriage Counseling = Valid ID', 'Birth Certificate', 'CENOMAR', 'Barangay Clearance', 'Passport-sized Photos'],
