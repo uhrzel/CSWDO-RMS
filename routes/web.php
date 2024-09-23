@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthManager; // Import the AuthManager class
 use App\Http\Controllers\SocialWorkerController; // Import the SocialWorkerController class
 use App\Http\Controllers\SocialWorkerAccountController; // Import the SocialWorkerAccountController class
 use App\Http\Controllers\FamilyMemberController; // Import the FamilyMemberController class
+use App\Http\Controllers\HomeController; // Import the HomeController class
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/social-worker/{clientId}', [ClientController::class, 'show'])->name('social-worker.index')->middleware('social');
     // generate pdf
     Route::get('/generate-pdf/{id}', [ClientController::class, 'generatePdf'])->name('generate.pdf');
+    /*    Route::get('/clients-by-barangay', [ClientController::class, 'home']); */
+
+    Route::get('/income-brackets', [HomeController::class, 'getIncomeBrackets']);
+    Route::get('/most-requested-services', [HomeController::class, 'getMostRequestedServices']);
+
+
+    Route::get('/gender-distribution', [HomeController::class, 'getGenderDistribution']);
+    Route::get('/age-group-services', [HomeController::class, 'getAgeGroupServices']);
 
     // web.php
     Route::get('/view-closed-clients', [ClientController::class, 'viewClosedClients'])->name('social-worker.view-closed-clients')->middleware('social');

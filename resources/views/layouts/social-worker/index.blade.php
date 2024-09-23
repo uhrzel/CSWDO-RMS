@@ -872,39 +872,74 @@
 									<option value="10" {{ $client->number_of_rooms == '10' ? 'selected' : '' }}>10</option>
 								</select>
 							</div>
+							@php
+							// Decode the monthly_expense JSON object
+							$monthlyExpense = json_decode($client->monthly_expenses, true);
+
+							// Fetch the 'Electricity' key if it exists, otherwise default to an empty string
+							$electricityExpense = $monthlyExpense['Electricity'] ?? '';
+							@endphp
+
 							<div class="col-md-4 mb-3">
 								<label for="electricity">Electricity</label>
 								<select name="electricity" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="electricity">
 									<option value="" disabled selected>Select Amount</option>
-									<option value="100-500">100-500</option>
-									<option value="500-1000">500-1000</option>
-									<option value="1000-2000">1000-2000</option>
-									<option value="2000-5000">2000-5000</option>
-									<option value="5000-10000">5000-10000</option>
+									<option value="100-500" {{ $electricityExpense == '100-500' ? 'selected' : '' }}>100-500</option>
+									<option value="500-1000" {{ $electricityExpense == '500-1000' ? 'selected' : '' }}>500-1000</option>
+									<option value="1000-2000" {{ $electricityExpense == '1000-2000' ? 'selected' : '' }}>1000-2000</option>
+									<option value="2000-5000" {{ $electricityExpense == '2000-5000' ? 'selected' : '' }}>2000-5000</option>
+									<option value="5000-10000" {{ $electricityExpense == '5000-10000' ? 'selected' : '' }}>5000-10000</option>
 								</select>
 							</div>
+
+
+							@php
+							// Decode the monthly_expense JSON object
+							$monthlyExpense = json_decode($client->monthly_expenses, true);
+
+							// Fetch the values for each expense category, defaulting to an empty string if not set
+							$electricityExpense = $monthlyExpense['Electricity'] ?? '';
+							$waterExpense = $monthlyExpense['Water'] ?? '';
+							$rentExpense = $monthlyExpense['Rent'] ?? '';
+							$otherExpense = $monthlyExpense['Other'] ?? '';
+							@endphp
+
+
+							<div class="col-md-4 mb-3">
+								<label for="electricity">Electricity</label>
+								<select name="electricity" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="electricity">
+									<option value="" disabled selected>Select Amount</option>
+									<option value="100-500" {{ $electricityExpense == '100-500' ? 'selected' : '' }}>100-500</option>
+									<option value="500-1000" {{ $electricityExpense == '500-1000' ? 'selected' : '' }}>500-1000</option>
+									<option value="1000-2000" {{ $electricityExpense == '1000-2000' ? 'selected' : '' }}>1000-2000</option>
+									<option value="2000-5000" {{ $electricityExpense == '2000-5000' ? 'selected' : '' }}>2000-5000</option>
+									<option value="5000-10000" {{ $electricityExpense == '5000-10000' ? 'selected' : '' }}>5000-10000</option>
+								</select>
+							</div>
+
 
 							<div class="col-md-4 mb-3">
 								<label for="water">Water</label>
 								<select name="water" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="water">
 									<option value="" disabled selected>Select Amount</option>
-									<option value="100-500">100-500</option>
-									<option value="500-1000">500-1000</option>
-									<option value="1000-2000">1000-2000</option>
-									<option value="2000-5000">2000-5000</option>
-									<option value="5000-10000">5000-10000</option>
+									<option value="100-500" {{ $waterExpense == '100-500' ? 'selected' : '' }}>100-500</option>
+									<option value="500-1000" {{ $waterExpense == '500-1000' ? 'selected' : '' }}>500-1000</option>
+									<option value="1000-2000" {{ $waterExpense == '1000-2000' ? 'selected' : '' }}>1000-2000</option>
+									<option value="2000-5000" {{ $waterExpense == '2000-5000' ? 'selected' : '' }}>2000-5000</option>
+									<option value="5000-10000" {{ $waterExpense == '5000-10000' ? 'selected' : '' }}>5000-10000</option>
 								</select>
 							</div>
+
 
 							<div class="col-md-4 mb-3">
 								<label for="rent">Rent</label>
 								<select name="rent" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="rent">
 									<option value="" disabled selected>Select Amount</option>
-									<option value="100-500">100-500</option>
-									<option value="500-1000">500-1000</option>
-									<option value="1000-2000">1000-2000</option>
-									<option value="2000-5000">2000-5000</option>
-									<option value="5000-10000">5000-10000</option>
+									<option value="100-500" {{ $rentExpense == '100-500' ? 'selected' : '' }}>100-500</option>
+									<option value="500-1000" {{ $rentExpense == '500-1000' ? 'selected' : '' }}>500-1000</option>
+									<option value="1000-2000" {{ $rentExpense == '1000-2000' ? 'selected' : '' }}>1000-2000</option>
+									<option value="2000-5000" {{ $rentExpense == '2000-5000' ? 'selected' : '' }}>2000-5000</option>
+									<option value="5000-10000" {{ $rentExpense == '5000-10000' ? 'selected' : '' }}>5000-10000</option>
 								</select>
 							</div>
 
@@ -912,13 +947,14 @@
 								<label for="other">Other</label>
 								<select name="other" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="other">
 									<option value="" disabled selected>Select Amount</option>
-									<option value="100-500">100-500</option>
-									<option value="500-1000">500-1000</option>
-									<option value="1000-2000">1000-2000</option>
-									<option value="2000-5000">2000-5000</option>
-									<option value="5000-10000">5000-10000</option>
+									<option value="100-500" {{ $otherExpense == '100-500' ? 'selected' : '' }}>100-500</option>
+									<option value="500-1000" {{ $otherExpense == '500-1000' ? 'selected' : '' }}>500-1000</option>
+									<option value="1000-2000" {{ $otherExpense == '1000-2000' ? 'selected' : '' }}>1000-2000</option>
+									<option value="2000-5000" {{ $otherExpense == '2000-5000' ? 'selected' : '' }}>2000-5000</option>
+									<option value="5000-10000" {{ $otherExpense == '5000-10000' ? 'selected' : '' }}>5000-10000</option>
 								</select>
 							</div>
+
 
 							<div class="col-md-4 form-group">
 								<label for="indicate">Indicate If The Client Is</label>

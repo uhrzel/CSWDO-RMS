@@ -199,6 +199,53 @@ class ClientController extends Controller
     {
         return view('clients.edit', compact('client'));
     }
+
+    public function getClientsByBarangay(Request $request)
+    {
+        $barangay = $request->input('barangay');
+        $clients = Client::where('barangay', $barangay)->get();
+
+        return response()->json($clients);
+    }
+
+    public function home()
+    {
+        $barangays = [
+            'Bagumbayan',
+            'Bambang',
+            'Calzada',
+            'Central Bicutan',
+            'Central Signal Village',
+            'Fort Bonifacio',
+            'Hagonoy',
+            'Ibayo-Tipas',
+            'Katuparan',
+            'Ligid-Tipas',
+            'Lower Bicutan',
+            'Maharlika Village',
+            'Napindan',
+            'New Lower Bicutan',
+            'North Daang Hari',
+            'North Signal Village',
+            'Palingon-Tipas',
+            'Pinagsama',
+            'San Miguel',
+            'Santa Ana',
+            'South Daang Hari',
+            'South Signal Village',
+            'Tanyag',
+            'Upper Bicutan',
+            'Ususan',
+            'Wawa',
+            'Western Bicutan',
+            'Central Signal',
+            'Bagong Tanyag'
+        ];
+
+        return view('home', compact('barangays'));
+    }
+
+
     public function update(Request $request, $id)
     {
         try {
