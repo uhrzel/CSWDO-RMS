@@ -1002,25 +1002,26 @@
 							<hr>
 							<div class="form-group">
 								<label for="circumstances_of_referral">Circumstances of Referral</label>
-								<textarea name="circumstances_of_referral" class="form-control" id="circumstances_of_referral" placeholder="Referred by barangay due to inability to afford expenses." rows="3" style="max-width: 500px; width: 100%;">{{ $client->circumstances_of_referral }}</textarea>
+								<textarea name="circumstances_of_referral" class="form-control" id="circumstances_of_referral" placeholder="Referred by barangay due to inability to afford expenses." rows="3" style="max-width: 500px; width: 100%;" {{ $client->problem_identification == 'Done' ? 'readonly' : '' }}>{{ $client->circumstances_of_referral }}</textarea>
+
 							</div>
 							<div class="form-group">
 								<label for="family_background">Family Background</label>
-								<textarea name="family_background" class="form-control" id="family_background" placeholder="Lives with spouse and three children, aged 10, 8, and 5." rows="3" style="max-width: 500px; width: 100%;">{{ $client->family_background }}</textarea>
+								<textarea name="family_background" class="form-control" id="family_background" placeholder="Lives with spouse and three children, aged 10, 8, and 5." rows="3" style="max-width: 500px; width: 100%;" {{ $client->problem_identification == 'Done' ? 'readonly' : '' }}>{{ $client->family_background }}</textarea>
 							</div>
 							<div class="form-group">
 								<label for="health_history">Health History of the Applicant</label>
-								<textarea name="health_history" class="form-control" id="health_history" placeholder="Diagnosed with hypertension and diabetes." rows="3" style="max-width: 500px; width: 100%;">{{ $client->health_history }}</textarea>
+								<textarea name="health_history" class="form-control" id="health_history" placeholder="Diagnosed with hypertension and diabetes." rows="3" style="max-width: 500px; width: 100%;" {{ $client->problem_identification == 'Done' ? 'readonly' : '' }}>{{ $client->health_history }}</textarea>
 							</div>
 							<div class="form-group">
 								<label for="economic_situation">Economic Situation</label>
-								<textarea name="economic_situation" class="form-control" id="economic_situation" placeholder="Primary earner of the family with no other sources of income." rows="3" style="max-width: 500px; width: 100%;">{{ $client->economic_situation }}</textarea>
+								<textarea name="economic_situation" class="form-control" id="economic_situation" placeholder="Primary earner of the family with no other sources of income." rows="3" style="max-width: 500px; width: 100%;" {{ $client->problem_identification == 'Done' ? 'readonly' : '' }}>{{ $client->economic_situation }}</textarea>
 							</div>
 
 							<br>
 							<div class="form-group">
 								<label for="problem_presented">Problem Presented</label>
-								<textarea name="problem_presented" class="form-control" id="problem_presented" placeholder="The request for burial assistance was submitted due to the financial difficulties faced by the family in managing funeral expenses." rows="5" style="width: 500px; min-height: 150px;">{{ $client->problem_presented }}</textarea>
+								<textarea name="problem_presented" class="form-control" id="problem_presented" placeholder="The request for burial assistance was submitted due to the financial difficulties faced by the family in managing funeral expenses." rows="5" style="width: 500px; min-height: 150px;" {{ $client->problem_identification == 'Done' ? 'readonly' : '' }}>{{ $client->problem_presented }}</textarea>
 							</div>
 							<div class="form-group">
 								<label for="problem_identification">Problem Identification</label>
@@ -1028,7 +1029,7 @@
 									<option value="" disabled selected>Select Problem Identification</option>
 									<option value="Done" {{ $client->problem_identification == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->problem_identification == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
-									<option value="Processing" {{ $client->problem_identification == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+									<!-- 								<option value="Processing" {{ $client->problem_identification == 'Processing' ? 'selected' : '' }}>🔄 Processing</option> -->
 								</select>
 							</div>
 							<hr>
@@ -1314,27 +1315,22 @@
 								});
 							</script>
 
-
-
-
-
-
 							<hr>
 							<div class="col-md-12 form-group">
 								<label for="home_visit">Home Visit Date</label>
-								<input type="date" name="home_visit" class="form-control" id="home_visit" value="{{ $client->home_visit }}" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;">
+								<input type="date" name="home_visit" class="form-control" id="home_visit" value="{{ $client->home_visit }}" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" {{ $client->data_gather == 'Done' ? 'readonly' : '' }}>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="interviewee">Interviewee</label>
-								<input type="text" class="form-control" id="interviewee" name="interviewee" value="{{ $client->interviewee }}" placeholder="Enter Interviewee" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;">
+								<input type="text" class="form-control" id="interviewee" name="interviewee" value="{{ $client->interviewee }}" placeholder="Enter Interviewee" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" {{ $client->data_gather == 'Done' ? 'readonly' : '' }}>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="interviewed_by">Interviewed By</label>
-								<input type="text" class="form-control" id="interviewed_by" name="interviewed_by" value="{{ $client->interviewed_by }}" placeholder="Enter Interviewed By" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;">
+								<input type="text" class="form-control" id="interviewed_by" name="interviewed_by" value="{{ $client->interviewed_by }}" placeholder="Enter Interviewed By" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" {{ $client->data_gather == 'Done' ? 'readonly' : '' }}>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="layunin">Layunin Ng Pagbisita</label>
-								<textarea name="layunin" class="form-control" id="layunin" placeholder="the social worker confirmed that the Applicant's household has stable electricity, clean running water with adequate pressure, and operational sanitation facilities. These findings will guide future support and interventions as necessary." style="width: 500px; height: 150px;">{{ $client->layunin }}</textarea>
+								<textarea name="layunin" class="form-control" id="layunin" placeholder="the social worker confirmed that the Applicant's household has stable electricity, clean running water with adequate pressure, and operational sanitation facilities. These findings will guide future support and interventions as necessary." style="width: 500px; height: 150px;" {{ $client->data_gather == 'Done' ? 'readonly' : '' }}>{{ $client->layunin }}</textarea>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="resulta">Resulta Ng Pagbisita</label>
@@ -1342,7 +1338,7 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="initial_agreement">Initial Agreement</label>
-								<textarea name="initial_agreement" class="form-control" id="initial_agreement" placeholder="The initial agreement outlines that the organization will provide financial assistance for the funeral expenses. The family agrees to submit all required documentation and cooperate with the assessment process to ensure timely support." style="width: 500px; height: 150px;">{{ $client->initial_agreement }}</textarea>
+								<textarea name="initial_agreement" class="form-control" id="initial_agreement" placeholder="The initial agreement outlines that the organization will provide financial assistance for the funeral expenses. The family agrees to submit all required documentation and cooperate with the assessment process to ensure timely support." style="width: 500px; height: 150px;" {{ $client->data_gather == 'Done' ? 'readonly' : '' }}>{{ $client->initial_agreement }}</textarea>
 							</div>
 							<div class="col-md-3 form-group">
 								<label for="data_gather">Data Gathering</label>
@@ -1350,12 +1346,13 @@
 									<option value="" disabled selected>Select Data Gathering</option>
 									<option value="Done" {{ $client->data_gather == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->data_gather == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
-									<option value="Processing" {{ $client->data_gather == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+									<!-- <option value="Processing" {{ $client->data_gather == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+							 -->
 								</select>
 							</div>
 							<div class="col-md-18 form-group">
 								<label for="assessment1">Assessment (may include psycho-social functioning, family functioning, environmental factors)</label>
-								<textarea name="assessment1" class="form-control custom-textarea" id="assessment1" style="width: 500px; height: 150px;" placeholder="The family is experiencing severe emotional distress and financial hardship due to a recent loss. Communication is strained, leading to conflicts, but there is a strong desire to support each other. Their living conditions are modest with limited access to resources and community services, further complicating their situation.">{{ $client->assessment1 }}</textarea>
+								<textarea name="assessment1" class="form-control custom-textarea" id="assessment1" style="width: 500px; height: 150px;" placeholder="The family is experiencing severe emotional distress and financial hardship due to a recent loss. Communication is strained, leading to conflicts, but there is a strong desire to support each other. Their living conditions are modest with limited access to resources and community services, further complicating their situation." {{ $client->assessment == 'Done' ? 'readonly' : '' }}>{{ $client->assessment1 }}</textarea>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="assessment">Assessment</label>
@@ -1363,16 +1360,17 @@
 									<option value="" disabled selected>Select Assessment</option>
 									<option value="Done" {{ $client->assessment == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->assessment == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
-									<option value="Processing" {{ $client->assessment == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+									<!-- <option value="Processing" {{ $client->assessment == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+						 -->
 								</select>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="case_management_evaluation">Case Management Evaluation</label>
-								<textarea name="case_management_evaluation" class="form-control" style="width: 500px; height: 150px;" id="case_management_evaluation" placeholder="Immediate financial assistance was provided for funeral expenses. Psycho-social support services were initiated, showing improved family communication and emotional stability. Continued financial support is recommended due to ongoing instability." style="width: 50%;">{{ $client->case_management_evaluation }}</textarea>
+								<textarea name="case_management_evaluation" class="form-control" style="width: 500px; height: 150px;" id="case_management_evaluation" placeholder="Immediate financial assistance was provided for funeral expenses. Psycho-social support services were initiated, showing improved family communication and emotional stability. Continued financial support is recommended due to ongoing instability." style="width: 50%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>{{ $client->case_management_evaluation }}</textarea>
 							</div>
 							<div class="col-md-12 form-group">
 								<label for="case_resolution">Case Resolution</label>
-								<textarea name="case_resolution" class="form-control" id="case_resolution" style="width: 500px; height: 150px;" placeholder="Financial aid for funeral costs was provided, and the family received counseling and community resource referrals. The family is now on a path to recovery and improved stability." style="width: 50%;">{{ $client->case_resolution }}</textarea>
+								<textarea name="case_resolution" class="form-control" id="case_resolution" style="width: 500px; height: 150px;" placeholder="Financial aid for funeral costs was provided, and the family received counseling and community resource referrals. The family is now on a path to recovery and improved stability." style="width: 50%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>{{ $client->case_resolution }}</textarea>
 							</div>
 							<div class="col-md-10 form-group">
 								<label for="tracking">Case Status</label>
@@ -1384,11 +1382,11 @@
 							</div>
 							<div class="col-md-10 form-group">
 								<label for="reviewing">Reviewing Officer (Social Welfare Offices)</label>
-								<input type="text" class="form-control" id="reviewing" name="reviewing" value="{{ $client->reviewing }}" placeholder="Enter Reviewing Officer" style="max-width: 500px; width: 100%;">
+								<input type="text" class="form-control" id="reviewing" name="reviewing" value="{{ $client->reviewing }}" placeholder="Enter Reviewing Officer" style="max-width: 500px; width: 100%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>
 							</div>
 							<div class="col-md-10 form-group">
 								<label for="approving">Approving Officer</label>
-								<input type="text" class="form-control" id="approving" name="approving" value="{{ $client->approving }}" placeholder="Enter Approving Officer" style="max-width: 500px; width: 100%;">
+								<input type="text" class="form-control" id="approving" name="approving" value="{{ $client->approving }}" placeholder="Enter Approving Officer" style="max-width: 500px; width: 100%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>
 							</div>
 
 							<div class="col-md-10 form-group">
@@ -1397,7 +1395,8 @@
 									<option value="" disabled selected>Select Evaluation</option>
 									<option value="Done" {{ $client->eval == 'Done' ? 'selected' : '' }}>✔️ Done</option>
 									<option value="Incomplete" {{ $client->eval == 'Incomplete' ? 'selected' : '' }}>❌ Incomplete</option>
-									<option value="Processing" {{ $client->eval == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+									<!-- 	<option value="Processing" {{ $client->eval == 'Processing' ? 'selected' : '' }}>🔄 Processing</option>
+							 -->
 								</select>
 							</div>
 							<div class="modal-footer">
