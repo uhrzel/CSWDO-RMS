@@ -1083,11 +1083,9 @@
 													<div class="form-check">
 														<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
 														<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-															@if ($service === 'Crisis Intervention Unit = Valid ID')
-															Valid ID
-															@else
+
 															{{ $service }}
-															@endif
+
 														</label>
 													</div>
 													@endforeach

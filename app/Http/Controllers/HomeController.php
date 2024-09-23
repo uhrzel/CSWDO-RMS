@@ -91,20 +91,112 @@ class HomeController extends Controller
         return response()->json(['clients' => $clients]);
     }
 
+    /*    public function getMostRequestedServices(Request $request)
+    {
+        $barangay = $request->input('barangay');
+
+        // Fetch the most requested services
+        $mostRequestedServices = DB::table('clients')
+            ->select(DB::raw('JSON_UNQUOTE(service_name) AS service, COUNT(*) as count'))
+            ->join(DB::raw('(SELECT id, JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service_name FROM clients WHERE barangay = ?) AS service_table'), 'clients.id', '=', 'service_table.id')
+            ->groupBy('service')
+            ->orderBy('count', 'DESC')
+            ->limit(5)
+            ->setBindings([$barangay])
+            ->get();
+
+        // Define the mapping of raw services to service names
+        $requirements = [
+            'Burial Assistance' => ['Burial', 'Financial', 'Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
+            'Crisis Intervention Unit' => ['Valid ID', 'Residence Certificate Or Barangay Clearance', 'Clinical Abstract/Medical Certificate', 'Police Report Or Incident Report', 'Funeral Contract And Registered Death Certificate. (if Applicable)', 'Electric Fan'],
+            'Solo Parent Services' => ['Solo Parent = Agency Referral', 'Residency Cert.', 'Medical Cert.', 'Billing Proof', 'Birth Cert.', 'ID Copy', 'Senior Citizen ID (60+)'],
+            'Pre-marriage Counseling' => ['Pre-marriage Counseling = Valid ID', 'Birth Certificate', 'CENOMAR', 'Barangay Clearance', 'Passport-sized Photos'],
+            'After-Care Services' => ['After-Care Services = Valid ID', 'Birth Certificate.', 'Residence Certificate.', 'SCSR', 'Medical Records'],
+            'Poverty Alleviation Program' => ['Poverty Alleviation Program = Valid ID', 'Residence Certificate', 'Income Certificate', 'SCSR.', 'Application Form'],
+        ];
+
+        // Transform the most requested services
+        $requestedServices = $mostRequestedServices->map(function ($serviceCount) use ($requirements) {
+            $serviceArray = json_decode($serviceCount->service); // Decode the JSON array
+            $matchedService = null;
+
+            // Check for service requirements
+            foreach ($requirements as $serviceName => $req) {
+                // Check if any requirement is present in the service array
+                if (array_intersect($req, $serviceArray)) {
+                    $matchedService = $serviceName;
+                    break;
+                }
+            }
+
+            // Set the matched service or keep the original if not matched
+            $serviceCount->service = $matchedService ?? $serviceCount->service;
+            return $serviceCount;
+        });
+
+        return response()->json($requestedServices);
+    }
+ */
+
     public function getMostRequestedServices(Request $request)
     {
         $barangay = $request->input('barangay');
 
+
         $mostRequestedServices = DB::table('clients')
-            ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) as service'), DB::raw('COUNT(*) as count'))
-            ->where('barangay', $barangay)
+            ->select(DB::raw('JSON_UNQUOTE(service_name) AS service, COUNT(*) as count'))
+            ->join(DB::raw('(SELECT id, JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service_name FROM clients WHERE barangay = ?) AS service_table'), 'clients.id', '=', 'service_table.id')
             ->groupBy('service')
             ->orderBy('count', 'DESC')
             ->limit(5)
+            ->setBindings([$barangay])
             ->get();
 
-        return response()->json($mostRequestedServices);
+        $requirements = [
+            'Burial Assistance' => ['Burial', 'Financial', 'Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
+            'Crisis Intervention Unit' => ['Valid ID', 'Residence Certificate Or Barangay Clearance', 'Clinical Abstract/Medical Certificate', 'Police Report Or Incident Report', 'Funeral Contract And Registered Death Certificate. (if Applicable)', 'Electric Fan'],
+            'Solo Parent Services' => ['Solo Parent = Agency Referral', 'Residency Cert.', 'Medical Cert.', 'Billing Proof', 'Birth Cert.', 'ID Copy', 'Senior Citizen ID (60+)'],
+            'Pre-marriage Counseling' => ['Pre-marriage Counseling = Valid ID', 'Birth Certificate', 'CENOMAR', 'Barangay Clearance', 'Passport-sized Photos'],
+            'After-Care Services' => ['After-Care Services = Valid ID', 'Birth Certificate.', 'Residence Certificate.', 'SCSR', 'Medical Records'],
+            'Poverty Alleviation Program' => ['Poverty Alleviation Program = Valid ID', 'Residence Certificate', 'Income Certificate', 'SCSR.', 'Application Form'],
+        ];
+
+
+        $unrelatedServices = [
+            'Refrigerator',
+            'Washing Machine',
+            'Television',
+            'Microwave',
+            'Air Conditioner',
+            'Electric Fan'
+        ];
+
+
+        $requestedServices = $mostRequestedServices->map(function ($serviceCount) use ($requirements, $unrelatedServices) {
+            $serviceArray = json_decode($serviceCount->service); // Decode the JSON array
+            $matchedService = null;
+
+
+            $filteredServiceArray = array_diff($serviceArray, $unrelatedServices);
+
+
+            foreach ($requirements as $serviceName => $req) {
+
+                if (array_intersect($req, $filteredServiceArray)) {
+                    $matchedService = $serviceName;
+                    break;
+                }
+            }
+
+            $serviceCount->service = $matchedService ?? $serviceCount->service;
+            return $serviceCount;
+        });
+
+        return response()->json($requestedServices);
     }
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="main-content">
     <section class="section">
         <div class="row">
@@ -143,6 +144,7 @@
                 });
 
                 $('#barangay-name-services').text(barangay);
+                console.log(serviceCounts);
                 updateServicesChart(serviceCounts);
             },
             error: function() {
