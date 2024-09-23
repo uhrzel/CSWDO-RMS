@@ -383,7 +383,7 @@
 
         h3 {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .form-section {
@@ -394,7 +394,7 @@
             display: inline-block;
             border: none;
             border-bottom: 1px solid #000;
-            margin-left: 10px;
+            margin-left: 5px;
             padding: 2px;
             vertical-align: middle;
         }
@@ -405,9 +405,9 @@
         }
 
         .form-right {
-            width: 35%;
+            width: 40%;
             float: right;
-            margin-top: -20px;
+            margin-top: -30px;
             /* Adjust this as needed to position the right side section */
         }
 
@@ -424,7 +424,7 @@
         .appliances label,
         .expenses label {
             display: inline-block;
-            width: 20%;
+            width: 30%;
         }
 
         .appliances input,
@@ -621,72 +621,80 @@
         </div>
 
 
+
         <div class="form-section">
             <label>6. Monthly Expenses</label>
-            <br><br>
-            <div>
+            <br>
+            <br>
+            <div class="expenses">
                 <div>
-                    <label>a. Electricity</label>
-                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Electricity ?? '' }}" class="input-line" style="width: 40%;" />
+                    <div>
+                        <label>a.Electric</label>
+                        <input type="text" value="{{ json_decode($client->monthly_expenses)->Electricity ?? '' }}" class="input-line" style="width: 50%;" />
+                    </div>
+                    <br>
+                    <div>
+                        <label>b. Water</label>
+                        <input type="text" value="{{ json_decode($client->monthly_expenses)->Water ?? '' }}" class="input-line" style="width: 50%;" />
+                    </div>
+                    <br>
+                    <div>
+                        <label>c.Rent</label>
+                        <input type="text" value="{{ json_decode($client->monthly_expenses)->Rent ?? '' }}" class="input-line" style="width: 50%;" />
+                    </div>
+                    <br>
+                    <div>
+                        <label>d. Others</label>
+                        <input type="text" value="{{ json_decode($client->monthly_expenses)->Other ?? '' }}" class="input-line" style="width: 50%;" />
+                    </div>
                 </div>
-                <br>
-                <div>
-                    <label>b. Water</label>
-                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Water ?? '' }}" class="input-line" style="width: 40%;" />
-                </div>
-                <br>
-                <div>
-                    <label>c. House Rent</label>
-                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Rent ?? '' }}" class="input-line" style="width: 40%;" />
-                </div>
-                <br>
-                <div>
-                    <label>d. Others</label>
-                    <input type="text" value="{{ json_decode($client->monthly_expenses)->Other ?? '' }}" class="input-line" style="width: 40%;" />
-                </div>
+
+
             </div>
 
         </div>
 
-        <div class="form-section">
-            <label>7. Indicate if the client is:</label> <br><br>
+    </div>
+
+    <div class="form-section">
+        <label>7. Indicate if the client is:</label> <br><br>
+        <div>
             <div>
-                <div>
-                    <input type="text" class="input-line" style="width: 30%; text-align: center;"
-                        @if ($client->indicate === 'House owner')
-                    value="Checked"
-                    readonly
-                    @endif
-                    />
-                    <label>House owner</label><br />
+                <input type="text" class="input-line" style="width: 30%; text-align: center;"
+                    @if ($client->indicate === 'House owner')
+                value="Checked"
+                readonly
+                @endif
+                />
+                <label>House owner</label><br />
 
-                    <input type="text" class="input-line" style="width: 30%; text-align: center;"
-                        @if ($client->indicate === 'House renter')
-                    value="Checked"
-                    readonly
-                    @endif
-                    />
-                    <label>House renter</label><br />
+                <input type="text" class="input-line" style="width: 30%; text-align: center;"
+                    @if ($client->indicate === 'House renter')
+                value="Checked"
+                readonly
+                @endif
+                />
+                <label>House renter</label><br />
 
-                    <input type="text" class="input-line" style="width: 30%; text-align: center;"
-                        @if ($client->indicate === 'Sharer')
-                    value="Checked"
-                    readonly
-                    @endif
-                    />
-                    <label>Sharer</label><br />
+                <input type="text" class="input-line" style="width: 30%; text-align: center;"
+                    @if ($client->indicate === 'Sharer')
+                value="Checked"
+                readonly
+                @endif
+                />
+                <label>Sharer</label><br />
 
-                    <input type="text" class="input-line" style="width: 30%; text-align: center;"
-                        @if ($client->indicate === 'Settler')
-                    value="Checked"
-                    readonly
-                    @endif
-                    />
-                    <label>Settler</label>
-                </div>
-
+                <input type="text" class="input-line" style="width: 30%; text-align: center;"
+                    @if ($client->indicate === 'Settler')
+                value="Checked"
+                readonly
+                @endif
+                />
+                <label>Settler</label>
             </div>
+
         </div>
+    </div>
     </div>
 
     <div class="form-section-page3">
@@ -710,7 +718,7 @@
     </div>
     <div class="signature-section">
         <div class="signature">
-            <div class="signature-line"></div>
+            <div class="signature-line"> {{ $client->first_name }} {{ $client->last_name }}</div>
             Informant's Name and Signature
             <br> <br>
             <div class="signature-line">{{ $client->approving }}</div>

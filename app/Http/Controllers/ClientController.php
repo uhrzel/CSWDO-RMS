@@ -318,6 +318,9 @@ class ClientController extends Controller
                 'building_number',
                 'street_name',
                 'barangay',
+                'date_of_birth',
+                'age',
+                'barangay',
                 'pob',
                 'sex',
                 'educational_attainment',
@@ -376,13 +379,21 @@ class ClientController extends Controller
             $client->monthly_expenses = json_encode($monthlyExpenses);
             // Handle appliances field if it's an array
             if ($request->has('appliances')) {
-                $client->appliances = json_encode($request->input('appliances', []));
+                $appliances = $request->input('appliances', []);
+                // Remove duplicates
+                $uniqueAppliances = array_unique($appliances);
+                $client->appliances = json_encode($uniqueAppliances);
             }
 
             // Handle services field if it's an array and store as JSON
+
             if ($request->has('services')) {
-                $client->services = json_encode($request->input('services', []));
+                $services = $request->input('services', []);
+                // Remove duplicates
+                $uniqueServices = array_unique($services);
+                $client->services = json_encode($uniqueServices);
             }
+
 
             // Send a message if the tracking status changes to 'Approve'
             if (in_array($client->tracking, ['Approve'])) {

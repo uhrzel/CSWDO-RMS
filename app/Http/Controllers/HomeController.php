@@ -35,8 +35,11 @@ class HomeController extends Controller
             'Bagumbayan',
             'Bambang',
             'Calzada',
+            'Cembo',
             'Central Bicutan',
             'Central Signal Village',
+            'Comembo',
+            'East Rembo',
             'Fort Bonifacio',
             'Hagonoy',
             'Ibayo-Tipas',
@@ -48,19 +51,25 @@ class HomeController extends Controller
             'New Lower Bicutan',
             'North Daang Hari',
             'North Signal Village',
-            'Palingon-Tipas',
+            'Rizal',
+            'Palingon',
+            'Pembo',
             'Pinagsama',
+            'Pitogo',
+            'Post Proper Northside',
+            'Post Proper Southside',
             'San Miguel',
             'Santa Ana',
             'South Daang Hari',
             'South Signal Village',
+            'South Cembo',
+            'Tuktukan',
             'Tanyag',
             'Upper Bicutan',
             'Ususan',
             'Wawa',
             'Western Bicutan',
-            'Central Signal',
-            'Bagong Tanyag'
+            'West Rembo',
         ];
 
 
@@ -144,17 +153,17 @@ class HomeController extends Controller
 
 
         $mostRequestedServices = DB::table('clients')
-            ->select(DB::raw('JSON_UNQUOTE(service_name) AS service, COUNT(*) as count'))
-            ->join(DB::raw('(SELECT id, JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service_name FROM clients WHERE barangay = ?) AS service_table'), 'clients.id', '=', 'service_table.id')
+            ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
+            ->where('barangay', $barangay)
             ->groupBy('service')
             ->orderBy('count', 'DESC')
             ->limit(5)
-            ->setBindings([$barangay])
             ->get();
+
 
         $requirements = [
             'Burial Assistance' => ['Burial', 'Financial', 'Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
-            'Crisis Intervention Unit' => ['Valid ID', 'Residence Certificate Or Barangay Clearance', 'Clinical Abstract/Medical Certificate', 'Police Report Or Incident Report', 'Funeral Contract And Registered Death Certificate. (if Applicable)', 'Electric Fan'],
+            'Crisis Intervention Unit' => ['Valid ID', 'Residence Certificate Or Barangay Clearance', 'Clinical Abstract/Medical Certificate', 'Police Report Or Incident Report', 'Funeral Contract And Registered Death Certificate. (if Applicable)'],
             'Solo Parent Services' => ['Solo Parent = Agency Referral', 'Residency Cert.', 'Medical Cert.', 'Billing Proof', 'Birth Cert.', 'ID Copy', 'Senior Citizen ID (60+)'],
             'Pre-marriage Counseling' => ['Pre-marriage Counseling = Valid ID', 'Birth Certificate', 'CENOMAR', 'Barangay Clearance', 'Passport-sized Photos'],
             'After-Care Services' => ['After-Care Services = Valid ID', 'Birth Certificate.', 'Residence Certificate.', 'SCSR', 'Medical Records'],

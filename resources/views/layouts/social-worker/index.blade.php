@@ -36,7 +36,7 @@
 								<th>View</th>
 								<th>Family Member</th>
 								<th>Edit</th>
-								<th>Delete</th>
+								<!-- <th>Delete</th> -->
 							</tr>
 						</thead>
 						<tbody id="searchResults">
@@ -79,7 +79,7 @@
 										<i class="fas fa-edit"></i>
 									</button>
 								</td>
-								<td>
+								<!-- <td>
 									<form action="{{ route('social-worker.delete', $client->id) }}" method="POST" class="d-inline" id="delete-form-{{ $client->id }}">
 										@csrf
 										@method('DELETE')
@@ -87,7 +87,7 @@
 											<i class="fas fa-trash"></i>
 										</button>
 									</form>
-								</td>
+								</td> -->
 							</tr>
 							@endforeach
 						</tbody>
@@ -330,214 +330,61 @@
 						<h4 class="mb-3">Services</h4>
 
 						<div class="form-group">
-							<h5><label>Burial Assistance</label></h5><br>
-							<div class="form-check-row">
-								<?php
-								$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-								$clientServices = is_array($clientServices) ? $clientServices : [];
-								$services = ['Burial', 'Financial', 'Funeral'];
-								$filteredServices = array_intersect($services, $clientServices);
-								?>
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">{{ $service }}</label>
-								</div>
-								@endforeach
-							</div>
-							@if(empty($filteredServices))
-							<p>No services available</p>
-							@endif
-						</div>
-						<hr>
 
-						<h5><label>Requirements</label></h5>
-						<div class="form-check-row">
 							<?php
-							$services = ['Crisis Intervention Unit = Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'];
-							$filteredServices = array_intersect($services, $clientServices);
-							?>
-							@foreach($filteredServices as $service)
-							<div class="form-check">
-								<label class="form-check-label">
-									@if ($service === 'Crisis Intervention Unit = Valid ID')
-									Valid ID
-									@else
-									{{ $service }}
-									@endif
-								</label>
-							</div>
-							@endforeach
-							@if(empty($filteredServices))
-							<p>No additional services available</p>
-							@endif
-						</div>
-						<hr>
+							$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+							$clientServices = is_array($clientServices) ? $clientServices : [];
 
-						<h5><label>Solo Parent Services</label></h5>
-						<div class="col">
-							<div class="form-check-row">
-								<?php
-								$services = [
+							// Define service categories and their available services
+							$serviceCategories = [
+								'Burial Assistance' => ['Burial', 'Financial', 'Funeral'],
+								'Solo Parent Services' => [
 									'Solo Parent = Agency Referral',
-									'Residency Cert.',
-									'Medical Cert.',
+									'Residency Cert',
+									'Medical Cert',
 									'Billing Proof',
-									'Birth Cert.',
+									'Birth Cert',
 									'ID Copy',
 									'Senior Citizen ID (60+)'
-								];
-								$filteredServices = array_intersect($services, $clientServices);
-								?>
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">
-										@if ($service === 'Solo Parent = Agency Referral')
-										Agency Referral
-										@else
-										{{ $service }}
-										@endif
-									</label>
-								</div>
-								@endforeach
-								@if(empty($filteredServices))
-								<p>No solo parent services available</p>
-								@endif
-							</div>
-						</div>
-						<hr>
-
-						<h5><label>Pre-marriage Counseling</label></h5><br>
-						<div class="col">
-							<div class="form-check-row">
-								<?php
-								$services = [
+								],
+								'Pre-marriage Counseling' => [
 									'Pre-marriage Counseling = Valid ID',
 									'Birth Certificate',
 									'CENOMAR',
 									'Barangay Clearance',
-									'Passport-sized Photos',
-								];
-								$filteredServices = array_intersect($services, $clientServices);
-								?>
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">
-										@if ($service === 'Pre-marriage Counseling = Valid ID')
-										Valid ID
-										@else
-										{{ $service }}
-										@endif
-									</label>
-								</div>
-								@endforeach
-								@if(empty($filteredServices))
-								<p>No pre-marriage counseling services available</p>
-								@endif
-							</div>
-						</div>
-						<hr>
-
-						<h5><label>After-Care Services</label></h5><br>
-						<div class="col">
-							<div class="form-check-row">
-								<?php
-								$services = [
+									'Passport-sized Photos'
+								],
+								'After-Care Services' => [
 									'After-Care Services = Valid ID',
-									'Birth Certificate.',
-									'Residence Certificate.',
+									'Birth Certificate',
+									'Residence Certificate',
 									'SCSR',
-									'Medical Records',
-								];
-								$filteredServices = array_intersect($services, $clientServices);
-								?>
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">
-										@if ($service === 'After-Care Services = Valid ID')
-										Valid ID
-										@else
-										{{ $service }}
-										@endif
-									</label>
-								</div>
-								@endforeach
-								@if(empty($filteredServices))
-								<p>No after-care services available</p>
-								@endif
-							</div>
-						</div>
-						<hr>
-
-						<h5><label>Poverty Alleviation Program</label></h5><br>
-						<div class="col">
-							<div class="form-check-row">
-								<?php
-								$services = [
+									'Medical Records'
+								],
+								'Poverty Alleviation Program' => [
 									'Poverty Alleviation Program = Valid ID',
 									'Residence Certificate',
 									'Income Certificate',
-									'SCSR.',
-									'Application Form',
-								];
-								$filteredServices = array_intersect($services, $clientServices);
-								?>
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">
-										@if ($service === 'Poverty Alleviation Program = Valid ID')
-										Valid ID
-										@else
-										{{ $service }}
-										@endif
-									</label>
-								</div>
-								@endforeach
-								@if(empty($filteredServices))
-								<p>No poverty alleviation program services available</p>
-								@endif
-							</div>
-						</div>
-						<hr>
-						<h5><label>Crisis Intervention Unit</label></h5><br>
-						<div class="col">
-							<div class="form-check-row">
-								<?php
-								// Define the list of services
-								$services = [
+									'SCSR',
+									'Application Form'
+								],
+								'Crisis Intervention Unit' => [
 									'Valid ID',
 									'Residence Certificate or Barangay Clearance',
 									'Clinical abstract/medical certificate',
 									'Police Report or Incident Report',
-									'Funeral contract and registered death certificate. (if applicable)',
-								];
+									'Funeral contract and registered death certificate (if applicable)'
+								]
+							];
 
-								// Convert clientServices to an array if it's not already
-								$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-								$clientServices = is_array($clientServices) ? $clientServices : [];
-
-								// Normalize the case of clientServices for comparison
-								$normalizedClientServices = array_map('strtolower', $clientServices);
-
-								// Normalize the case of services for comparison
-								$normalizedServices = array_map('strtolower', $services);
-
-								// Get the intersection of services and clientServices
-								$filteredServices = array_intersect($normalizedServices, $normalizedClientServices);
-
-								// If the filteredServices is empty, it means no services match
-								?>
-								@if (!empty($filteredServices))
-								@foreach($filteredServices as $service)
-								<div class="form-check">
-									<label class="form-check-label">
-										{{ ucfirst($service) }}
-									</label>
-								</div>
-								@endforeach
-								@else
-								<p>No Crisis Intervention services available</p>
-								@endif
-							</div>
+							// Check and display available service categories
+							foreach ($serviceCategories as $category => $services) {
+								$filteredServices = array_intersect($services, $clientServices);
+								if (!empty($filteredServices)) {
+									echo "<h5><label>{$category}</label></h5><br>";
+								}
+							}
+							?>
 						</div>
 
 						<hr>
@@ -664,53 +511,78 @@
 									value="{{$client->barangay}}" required>
 									<option value="">Select a Barangay</option>
 									<option value="Tanyag">Tanyag</option>
-									<option value="Bagumbayan">Bagumbayan</option>
-									<option value="Bambang">Bambang</option>
-									<option value="Calzada">Calzada</option>
-									<option value="Hagonoy">Hagonoy</option>
-									<option value="Ibayo-Tipas">Ibayo-Tipas</option>
-									<option value="Ligid-Tipas">Ligid-Tipas</option>
-									<option value="Lower Bicutan">Lower Bicutan</option>
-									<option value="Maharlika Village">Maharlika Village</option>
-									<option value="Napindan">Napindan</option>
-									<option value="Palingon">Palingon</option>
-									<option value="Santa Ana">Santa Ana</option>
-									<option value="Central Signal Village">Central Signal Village</option>
-									<option value="Tuktukan">Tuktukan</option>
-									<option value="Upper Bicutan">Upper Bicutan</option>
-									<option value="Ususan">Ususan</option>
-									<option value="Wawa">Wawa</option>
-									<option value="Western Bicutan">Western Bicutan</option>
-									<option value="Central Bicutan">Central Bicutan</option>
-									<option value="Fort Bonifacio">Fort Bonifacio</option>
-									<option value="Katuparan">Katuparan</option>
-									<option value="New Lower Bicutan">New Lower Bicutan</option>
-									<option value="North Daang Hari">North Daang Hari</option>
-									<option value="North Signal Village">North Signal Village</option>
-									<option value="Pinagsama">Pinagsama</option>
-									<option value="San Miguel">San Miguel</option>
-									<option value="South Daang Hari">South Daang Hari</option>
-									<option value="South Signal Village">South Signal Village</option>
-									<option value="Cembo">Cembo</option>
-									<option value="Comembo">Comembo</option>
-									<option value="East Rembo">East Rembo</option>
-									<option value="Pembo">Pembo</option>
-									<option value="Pitogo">Pitogo</option>
-									<option value="Post Proper Northside">Post Proper Northside</option>
-									<option value="Post Proper Southside">Post Proper Southside</option>
-									<option value="Rizal">Rizal</option>
-									<option value="South Cembo">South Cembo</option>
-									<option value="West Rembo">West Rembo</option>
+									<option value="Bagumbayan" {{ $client->barangay == 'Bagumbayan' ? 'selected' : '' }}>Bagumbayan</option>
+									<option value="Bambang" {{ $client->barangay == 'Bambang' ? 'selected' : '' }}>Bambang</option>
+									<option value="Calzada" {{ $client->barangay == 'Calzada' ? 'selected' : '' }}>Calzada</option>
+									<option value="Hagonoy" {{ $client->barangay == 'Hagonoy' ? 'selected' : '' }}>Hagonoy</option>
+									<option value="Ibayo-Tipas" {{ $client->barangay == 'Ibayo-Tipas' ? 'selected' : '' }}>Ibayo-Tipas</option>
+									<option value="Ligid-Tipas" {{ $client->barangay == 'Ligid-Tipas' ? 'selected' : '' }}>Ligid-Tipas</option>
+									<option value="Lower Bicutan" {{ $client->barangay == 'Lower Bicutan' ? 'selected' : '' }}>Lower Bicutan</option>
+									<option value="Maharlika Village" {{ $client->barangay == 'Maharlika Village' ? 'selected' : '' }}>Maharlika Village</option>
+									<option value="Napindan" {{ $client->barangay == 'Napindan' ? 'selected' : '' }}>Napindan</option>
+									<option value="Palingon" {{ $client->barangay == 'Palingon' ? 'selected' : '' }}>Palingon</option>
+									<option value="Santa Ana" {{ $client->barangay == 'Santa Ana' ? 'selected' : '' }}>Santa Ana</option>
+									<option value="Central Signal Village" {{ $client->barangay == 'Central Signal Village' ? 'selected' : '' }}>Central Signal Village</option>
+									<option value="Tuktukan" {{ $client->barangay == 'Tuktukan' ? 'selected' : '' }}>Tuktukan</option>
+									<option value="Upper Bicutan" {{ $client->barangay == 'Upper Bicutan' ? 'selected' : '' }}>Upper Bicutan</option>
+									<option value="Ususan" {{ $client->barangay == 'Ususan' ? 'selected' : '' }}>Ususan</option>
+									<option value="Wawa" {{ $client->barangay == 'Wawa' ? 'selected' : '' }}>Wawa</option>
+									<option value="Western Bicutan" {{ $client->barangay == 'Western Bicutan' ? 'selected' : '' }}>Western Bicutan</option>
+									<option value="Central Bicutan" {{ $client->barangay == 'Central Bicutan' ? 'selected' : '' }}>Central Bicutan</option>
+									<option value="Fort Bonifacio" {{ $client->barangay == 'Fort Bonifacio' ? 'selected' : '' }}>Fort Bonifacio</option>
+									<option value="Katuparan" {{ $client->barangay == 'Katuparan' ? 'selected' : '' }}>Katuparan</option>
+									<option value="New Lower Bicutan" {{ $client->barangay == 'New Lower Bicutan' ? 'selected' : '' }}>New Lower Bicutan</option>
+									<option value="North Daang Hari" {{ $client->barangay == 'North Daang Hari' ? 'selected' : '' }}>North Daang Hari</option>
+									<option value="North Signal Village" {{ $client->barangay == 'North Signal Village' ? 'selected' : '' }}>North Signal Village</option>
+									<option value="Pinagsama" {{ $client->barangay == 'Pinagsama' ? 'selected' : '' }}>Pinagsama</option>
+									<option value="San Miguel" {{ $client->barangay == 'San Miguel' ? 'selected' : '' }}>San Miguel</option>
+									<option value="South Daang Hari" {{ $client->barangay == 'South Daang Hari' ? 'selected' : '' }}>South Daang Hari</option>
+									<option value="South Signal Village" {{ $client->barangay == 'South Signal Village' ? 'selected' : '' }}>South Signal Village</option>
+									<option value="Cembo" {{ $client->barangay == 'Cembo' ? 'selected' : '' }}>Cembo</option>
+									<option value="Comembo" {{ $client->barangay == 'Comembo' ? 'selected' : '' }}>Comembo</option>
+									<option value="East Rembo" {{ $client->barangay == 'East Rembo' ? 'selected' : '' }}>East Rembo</option>
+									<option value="Pembo" {{ $client->barangay == 'Pembo' ? 'selected' : '' }}>Pembo</option>
+									<option value="Pitogo" {{ $client->barangay == 'Pitogo' ? 'selected' : '' }}>Pitogo</option>
+									<option value="Post Proper Northside" {{ $client->barangay == 'Calzada' ? 'selected' : '' }}>Post Proper Northside</option>
+									<option value="Post Proper Southside" {{ $client->barangay == 'Post Proper Southside' ? 'selected' : '' }}>Post Proper Southside</option>
+									<option value="Rizal" {{ $client->barangay == 'Rizal' ? 'selected' : '' }}>Rizal</option>
+									<option value="South Cembo" {{ $client->barangay == 'South Cembo' ? 'selected' : '' }}>South Cembo</option>
+									<option value="West Rembo" {{ $client->barangay == 'West Rembo' ? 'selected' : '' }}>West Rembo</option>
+
 								</select>
 							</div>
 							<div class="col-md-4 mb-3">
 								<label for="date_of_birth">Date of Birth</label>
-								<input type="date" name="date_of_birth" class="form-control" id="date_of_birth" value="{{$client->date_of_birth}}" placeholder="Enter Date of Birth" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" required>
+								<input type="date" name="date_of_birth" class="form-control" id="date_of_birth{{ $client->id }}"
+									value="{{$client->date_of_birth}}" placeholder="Enter Date of Birth"
+									style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" required>
 							</div>
 							<div class="col-md-4 mb-3">
 								<label for="age">Age</label>
-								<input type="text" name="age" class="form-control" id="age" placeholder="Age" value="{{$client->age}}" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;">
+								<input type="text" name="age" class="form-control" id="age{{ $client->id }}" placeholder="Age"
+									value="{{$client->age}}" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;">
 							</div>
+							<script>
+								document.getElementById('date_of_birth{{ $client->id }}').addEventListener('change', function() {
+									try {
+										var dob = new Date(this.value);
+										var today = new Date();
+										var age = today.getFullYear() - dob.getFullYear();
+										var monthDiff = today.getMonth() - dob.getMonth();
+
+										// Adjust age if the birthday hasn't occurred yet this year
+										if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+											age--;
+										}
+
+										// Update the age input field
+										document.getElementById('age{{ $client->id }}').value = age;
+									} catch (error) {
+										console.error("An error occurred while calculating age:", error);
+										alert("Failed to calculate age. Please check the date of birth format.");
+									}
+								});
+							</script>
 							<div class="col-md-4 form-group">
 								<label for="pob">Place of Birth</label>
 								<input type="text" class="form-control" id="pob" name="pob" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" value="{{ $client->pob }}" required>
@@ -1093,7 +965,7 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Save</button>
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
 											</div>
 										</div>
 									</div>
@@ -1458,20 +1330,32 @@
 			var formData = form.serializeArray(); // Get form data as an array of objects
 
 			// Get the appliances values and convert to an array
+			// Get the appliances values and convert to an array
 			var appliances = form.find('input[name="appliances[]"]:checked').map(function() {
 				return $(this).val();
 			}).get();
+
+			// Get the services values and convert to an array
 			var services = form.find('input[name="services[]"]:checked').map(function() {
 				return $(this).val();
 			}).get();
 
 			// Add appliances to formData
-			formData.push({
-				name: 'appliances[]',
-				name: 'services[]',
-				value: appliances,
-				services
+			appliances.forEach(function(appliance) {
+				formData.push({
+					name: 'appliances[]',
+					value: appliance
+				});
 			});
+
+			// Add services to formData
+			services.forEach(function(service) {
+				formData.push({
+					name: 'services[]',
+					value: service
+				});
+			});
+
 
 			var url = '/social-worker/update/' + clientId;
 
@@ -1479,9 +1363,12 @@
 				url: url,
 				type: 'PUT',
 				data: $.param(formData, true),
+
 				success: function(response) {
 					// Handle successful response
 					var updatedClient = response.client;
+					console.log(formData);
+
 
 					// Update table rows with the new data
 					$('tr[data-client-id="' + clientId + '"] td[data-field="first_name"]').text(updatedClient.first_name);
