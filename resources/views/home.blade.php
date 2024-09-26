@@ -29,12 +29,12 @@
                                 <div class="card-stats-item-label">Total Clients</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{ $incompleteClients }}</div>
-                                <div class="card-stats-item-label">Incomplete Clients</div>
+                                <div class="card-stats-item-count">{{ $ongoingClients }}</div>
+                                <div class="card-stats-item-label">Ongoing Clients</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">23</div>
-                                <div class="card-stats-item-label">Completed</div>
+                                <div class="card-stats-item-count">{{$closedClients}}</div>
+                                <div class="card-stats-item-label">Completed Clients</div>
                             </div>
                         </div>
                         <div class="card-icon shadow-primary bg-primary">

@@ -146,7 +146,7 @@ class ClientController extends Controller
         } else {
             $validatedData['other_religion'] = null;
         }
-
+        $validatedData['tracking'] = 'Re-access';
         // Create the client record
         $client = Client::create($validatedData);
 
@@ -159,7 +159,7 @@ class ClientController extends Controller
 
     public function caselist()
     {
-        $clients = Client::all();
+        $clients = Client::where('tracking', 'Re-access')->get();
         return view('layouts.social-worker.index', compact('clients'));
     }
 

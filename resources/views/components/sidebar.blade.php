@@ -60,7 +60,8 @@
                 <ul id="caseListingDropdown" class="dropdown-menu-custom">
                     <li><a class="{{ Request::is('social-worker') ? 'active' : '' }}" href="{{ url('social-worker') }}" style="color: white;"><i class="fas fa-list"></i> Case Listing</a></li>
                     <li><a class="{{ Request::is('view-closed-clients') ? 'active' : '' }}" href="{{ url('view-closed-clients') }}" style="color: white;"><i class="fas fa-user-times"></i> Closed Clients</a></li>
-                    <li><a class="{{ Request::is('view-ongoing-clients') ? 'active' : '' }}" href="{{ url('view-ongoing-clients') }}" style="color: white;"><i class="fas fa-user-clock"></i> On Going Clients</a></li>
+                    <!--  <li><a class="{{ Request::is('view-ongoing-clients') ? 'active' : '' }}" href="{{ url('view-ongoing-clients') }}" style="color: white;"><i class="fas fa-user-clock"></i> On Going Clients</a></li>
+            -->
                 </ul>
             </li>
             @endif

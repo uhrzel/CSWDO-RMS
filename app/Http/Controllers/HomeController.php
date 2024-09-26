@@ -86,10 +86,11 @@ class HomeController extends Controller
                 ->orWhere('assessment', '!=', 'Done')
                 ->orWhere('eval', '!=', 'Done');
         })->count();
-
+        $closedClients = Client::where('tracking', '=', 'Approve')->count();
+        $ongoingClients = Client::where('tracking', '=', 'Re-access')->count();
         $totalSocialWorkers = Social::where('role', 'social-worker')->count();
 
-        return view('home', compact('totalClients', 'completedClients', 'incompleteClients', 'totalFamilyMembers', 'totalSocialWorkers', 'barangays'));
+        return view('home', compact('totalClients', 'closedClients', 'ongoingClients', 'totalFamilyMembers', 'totalSocialWorkers', 'barangays'));
     }
 
     public function getIncomeBrackets(Request $request)
