@@ -78,8 +78,6 @@ class HomeController extends Controller
             ->where('assessment', 'Done')
             ->where('eval', 'Done')
             ->count();
-
-        // Fetch the total number of clients who have not completed all stages
         $incompleteClients = Client::where(function ($query) {
             $query->where('problem_identification', '!=', 'Done')
                 ->orWhere('data_gather', '!=', 'Done')
@@ -197,7 +195,7 @@ class HomeController extends Controller
 
 
         $requestedServices = $mostRequestedServices->map(function ($serviceCount) use ($requirements, $unrelatedServices) {
-            $serviceArray = json_decode($serviceCount->service); // Decode the JSON array
+            $serviceArray = json_decode($serviceCount->service);
             $matchedService = null;
 
 
@@ -229,12 +227,11 @@ class HomeController extends Controller
             ->select(DB::raw('sex AS gender, COUNT(*) as count'))
             ->groupBy('sex');
 
-        // Apply where clause only if barangay is not 'all'
+
         if ($barangay !== 'all') {
             $query->where('barangay', $barangay);
         }
 
-        // Execute the query and pluck the results
         $genderData = $query->get()->pluck('count', 'gender');
 
         return response()->json([
@@ -248,25 +245,24 @@ class HomeController extends Controller
     {
         $barangay = $request->input('barangay');
 
-        // Define age groups
+
         $ageGroups = [
             '0-17' => 0,
             '18-64' => 0,
             '65+' => 0,
         ];
 
-        // Prepare the query
         $query = DB::table('clients');
 
-        // Apply where clause only if barangay is not 'all'
+
         if ($barangay !== 'all') {
             $query->where('barangay', $barangay);
         }
 
-        // Get clients based on the query
+
         $clients = $query->get();
 
-        // Count age groups
+
         foreach ($clients as $client) {
             $age = intval($client->age);
             if ($age <= 17) {
