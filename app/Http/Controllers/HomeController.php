@@ -95,8 +95,13 @@ class HomeController extends Controller
 
     public function getIncomeBrackets(Request $request)
     {
-        $barangay = $request->get('barangay');
-        $clients = Client::where('barangay', $barangay)->get();
+        if ($request->barangay === 'all') {
+
+            $clients = Client::all();
+        } else {
+            // Query for specific barangay
+            $clients = Client::where('barangay', $request->barangay)->get();
+        }
 
         return response()->json(['clients' => $clients]);
     }
@@ -153,14 +158,23 @@ class HomeController extends Controller
         $barangay = $request->input('barangay');
 
 
-        $mostRequestedServices = DB::table('clients')
-            ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
-            ->where('barangay', $barangay)
-            ->groupBy('service')
-            ->orderBy('count', 'DESC')
-            ->limit(5)
-            ->get();
 
+        if ($barangay === 'all') {
+            $mostRequestedServices = DB::table('clients')
+                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
+                ->groupBy('service')
+                ->orderBy('count', 'DESC')
+                ->limit(5)
+                ->get();
+        } else {
+            $mostRequestedServices = DB::table('clients')
+                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
+                ->where('barangay', $barangay)
+                ->groupBy('service')
+                ->orderBy('count', 'DESC')
+                ->limit(5)
+                ->get();
+        }
 
         $requirements = [
             'Burial Assistance' => ['Burial', 'Financial', 'Crisis Intervention Unit = Valid ID', 'Barangay Clearance.', 'Medical Certificate.', 'Incident Report.', 'Funeral Contract.', 'Death Certificate.'],
@@ -206,20 +220,22 @@ class HomeController extends Controller
     }
 
 
-
-
-
-
     public function getGenderDistribution(Request $request)
     {
         $barangay = $request->input('barangay');
 
-        $genderData = DB::table('clients')
+        // Prepare the query
+        $query = DB::table('clients')
             ->select(DB::raw('sex AS gender, COUNT(*) as count'))
-            ->where('barangay', $barangay)
-            ->groupBy('sex')
-            ->get()
-            ->pluck('count', 'gender');
+            ->groupBy('sex');
+
+        // Apply where clause only if barangay is not 'all'
+        if ($barangay !== 'all') {
+            $query->where('barangay', $barangay);
+        }
+
+        // Execute the query and pluck the results
+        $genderData = $query->get()->pluck('count', 'gender');
 
         return response()->json([
             'male' => $genderData->get('Male', 0),
@@ -232,18 +248,25 @@ class HomeController extends Controller
     {
         $barangay = $request->input('barangay');
 
-
+        // Define age groups
         $ageGroups = [
             '0-17' => 0,
             '18-64' => 0,
             '65+' => 0,
         ];
 
+        // Prepare the query
+        $query = DB::table('clients');
 
-        $clients = DB::table('clients')
-            ->where('barangay', $barangay)
-            ->get();
+        // Apply where clause only if barangay is not 'all'
+        if ($barangay !== 'all') {
+            $query->where('barangay', $barangay);
+        }
 
+        // Get clients based on the query
+        $clients = $query->get();
+
+        // Count age groups
         foreach ($clients as $client) {
             $age = intval($client->age);
             if ($age <= 17) {
@@ -257,6 +280,7 @@ class HomeController extends Controller
 
         return response()->json($ageGroups);
     }
+
 
     public function blank()
     {

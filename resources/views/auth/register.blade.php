@@ -15,10 +15,22 @@
 
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
-                                <label for="name" class="form-label">{{ __('Name') }}</label>
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <label for="firstname" class="form-label">{{ __('Firstname') }}</label>
+                                <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname" autofocus>
 
-                                @error('name')
+                                @error('firstname')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-8 offset-md-2">
+                                <label for="lastname" class="form-label">{{ __('Lastname') }}</label>
+                                <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname">
+
+                                @error('lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -60,7 +72,7 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-2 ">
+                            <div class="col-md-8 offset-md-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>

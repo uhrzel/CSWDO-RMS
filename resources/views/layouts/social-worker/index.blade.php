@@ -180,13 +180,13 @@
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="viewClientModalLabel{{ $client->id }}">Client Details</h5>
+					<h5 class="modal-title" id="viewClientModalLabel{{ $client->id }}">Applicant Details</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<h5>View Client History</h5>
+					<h5>View Applicant History</h5>
 					<section class="section">
 						<div class="section-body">
 							<div class="card">
@@ -238,7 +238,7 @@
 					</section>
 
 					<div class="client-info">
-						<h6 class="text-muted mb-3">Client Details</h6>
+						<h6 class="text-muted mb-3">Applicant Details</h6>
 
 						<div class="row mb-2">
 							<div class="col-md-6"><strong>Control No:</strong> {{ $client->control_number }}</div>
@@ -829,7 +829,7 @@
 
 
 							<div class="col-md-4 form-group">
-								<label for="indicate">Indicate If The Client Is</label>
+								<label for="indicate">Indicate If The Applicant Is</label>
 								<select name="indicate" class="form-control" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" id="indicate" required>
 									<option value="" selected disabled>Indicate If The Client Is</option>
 									<option value="House Owner" {{ $client->indicate == 'House Owner' ? 'selected' : '' }}>House Owner</option>

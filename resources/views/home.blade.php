@@ -9,7 +9,7 @@
                 <div class="card card-statistic-2">
                     <div class="card-stats">
                         <div class="card-stats-title">
-                            Clients -
+                            Applicant -
                             <div class="dropdown d-inline">
                                 <a
                                     class="font-weight-600 dropdown-toggle"
@@ -17,6 +17,9 @@
                                     href="#"
                                     id="orders-month">Select Barangay</a>
                                 <ul class="dropdown-menu dropdown-menu-sm" style="max-height: 200px; overflow-y: auto;">
+                                    <li>
+                                        <a href="#" class="dropdown-item" onclick="showIncomeBrackets('Overall')">Overall</a>
+                                    </li>
                                     @foreach($barangays as $barangay)
                                     <li><a href="#" class="dropdown-item" onclick="showIncomeBrackets('{{ $barangay }}')">{{ $barangay }}</a></li>
                                     @endforeach
@@ -26,15 +29,15 @@
                         <div class="card-stats-items">
                             <div class="card-stats-item">
                                 <div class="card-stats-item-count">{{ $totalClients }}</div>
-                                <div class="card-stats-item-label">Total Clients</div>
+                                <div class="card-stats-item-label">Total Applicants</div>
                             </div>
                             <div class="card-stats-item">
                                 <div class="card-stats-item-count">{{ $ongoingClients }}</div>
-                                <div class="card-stats-item-label">Ongoing Clients</div>
+                                <div class="card-stats-item-label">Ongoing Applicants</div>
                             </div>
                             <div class="card-stats-item">
                                 <div class="card-stats-item-count">{{$closedClients}}</div>
-                                <div class="card-stats-item-label">Completed Clients</div>
+                                <div class="card-stats-item-label">Completed Applicants</div>
                             </div>
                         </div>
                         <div class="card-icon shadow-primary bg-primary">
@@ -42,7 +45,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Clients</h4>
+                                <h4>Total Applicants</h4>
                             </div>
                             <div class="card-body">
                                 {{ $totalClients }}
@@ -168,23 +171,29 @@
     let incomeChart, servicesChart, genderChart, ageGroupChart;
 
     function showIncomeBrackets(barangay) {
+        // Determine if we should fetch overall data or specific barangay data
+        let fetchAll = (barangay === 'Overall');
+
         // Fetch income brackets
         $.ajax({
             url: '/income-brackets',
             type: 'GET',
             data: {
-                barangay: barangay
+                barangay: fetchAll ? 'all' : barangay // Adjust backend to handle 'all'
             },
             success: function(data) {
+                console.log('Income Brackets Data:', data);
+                // Reset income data
                 Object.keys(incomeData).forEach(key => incomeData[key] = 0);
 
+                // Process received data
                 data.clients.forEach(client => {
                     if (incomeData.hasOwnProperty(client.monthly_income)) {
                         incomeData[client.monthly_income]++;
                     }
                 });
 
-                $('#barangay-name').text(barangay);
+                $('#barangay-name').text(fetchAll ? 'All Barangays' : barangay);
                 updateIncomeChart();
             },
             error: function() {
@@ -197,16 +206,16 @@
             url: '/most-requested-services',
             type: 'GET',
             data: {
-                barangay: barangay
+                barangay: fetchAll ? 'all' : barangay // Adjust backend to handle 'all'
             },
             success: function(services) {
+
                 const serviceCounts = {};
                 services.forEach(service => {
                     serviceCounts[service.service] = service.count;
                 });
 
-                $('#barangay-name-services').text(barangay);
-                console.log(serviceCounts);
+                $('#barangay-name-services').text(fetchAll ? 'All Barangays' : barangay);
                 updateServicesChart(serviceCounts);
             },
             error: function() {
@@ -219,10 +228,10 @@
             url: '/gender-distribution',
             type: 'GET',
             data: {
-                barangay: barangay
+                barangay: fetchAll ? 'all' : barangay // Adjust backend to handle 'all'
             },
             success: function(genderData) {
-                $('#barangay-name-gender').text(barangay);
+                $('#barangay-name-gender').text(fetchAll ? 'All Barangays' : barangay);
                 updateGenderChart(genderData);
             },
             error: function() {
@@ -235,10 +244,10 @@
             url: '/age-group-services',
             type: 'GET',
             data: {
-                barangay: barangay
+                barangay: fetchAll ? 'all' : barangay // Adjust backend to handle 'all'
             },
             success: function(ageData) {
-                $('#barangay-name-age').text(barangay);
+                $('#barangay-name-age').text(fetchAll ? 'All Barangays' : barangay);
                 updateAgeGroupChart(ageData);
             },
             error: function() {
@@ -246,6 +255,7 @@
             }
         });
     }
+
 
     function updateIncomeChart() {
         const ctx = document.getElementById('incomeChart').getContext('2d');

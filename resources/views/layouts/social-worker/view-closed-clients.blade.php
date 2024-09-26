@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Client Status')
+@section('title', 'Applicant Status')
 
 @section('content')
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Client Status</h1>
+            <h1>Applicant Status</h1>
         </div>
 
         <div class="section-body">
@@ -16,7 +16,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4>Clients with Closed Tracking</h4>
+                    <h4>Applicants with Closed Tracking</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
