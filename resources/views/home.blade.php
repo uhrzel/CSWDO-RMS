@@ -152,7 +152,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Monthly Average with Linear Regression</h4>
+                        <h4>Clients per Month Predection</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="monthlyAverageChart"></canvas>
@@ -166,7 +166,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Linear Regression</h4>
+                        <h4>Services per Barangay Prediction</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="barangayServiceChart" width="400" height="200"></canvas>
