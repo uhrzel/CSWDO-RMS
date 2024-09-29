@@ -10,6 +10,9 @@ use App\Http\Controllers\SocialWorkerController; // Import the SocialWorkerContr
 use App\Http\Controllers\SocialWorkerAccountController; // Import the SocialWorkerAccountController class
 use App\Http\Controllers\FamilyMemberController; // Import the FamilyMemberController class
 use App\Http\Controllers\HomeController; // Import the HomeController class
+use App\Http\Controllers\Auth\AdminRegisterController;
+use App\Http\Controllers\LogController; // Import the LogController class
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::post('/preregisters', [ClientController::class, 'store'])->name('preregisters.store');
 Route::get('/preregistration', [AuthManager::class, 'preregistration'])->name('preregistration');
+Route::get('/admin/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('admin.register.form');
+Route::post('/admin/register', [AdminRegisterController::class, 'register'])->name('admin.register');
+Route::get('/logs', [LogController::class, 'index'])->middleware('auth')->name('logs.index');
 
 Route::middleware(['auth'])->group(function () {
     //admin profile
@@ -27,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'changepassword'])->name('profile.change-password');
     Route::put('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
-    Route::get('/blank-page', [App\Http\Controllers\HomeController::class, 'blank'])->name('blank');
+    Route::get('/register', [App\Http\Controllers\HomeController::class, 'blank'])->name('blank');
 
     //fetching social worker
     Route::get('/social-worker', [ClientController::class, 'caselist'])->name('social-worker.index')->middleware('social');

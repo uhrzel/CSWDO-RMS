@@ -54,7 +54,8 @@
                     <tbody id="searchResults">
                         @foreach ($socialWorkers as $worker)
                         <tr>
-                            <td class="name">{{ $worker->name }}</td>
+                            <td class="name">{{ $worker->firstname . ' ' . $worker->lastname }}</td>
+
                             <td class="email">{{ $worker->email }}</td>
                             <!--   <td class="email">{{ $worker->password }}</td> -->
                             <td>

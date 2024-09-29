@@ -22,6 +22,7 @@ class User extends Authenticatable
         'middlename',
         'city',
         'baranggay',
+        'contact',
         'birthday',
         'age',
         'email',
@@ -48,6 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login' => 'datetime',
         ];
     }
 }

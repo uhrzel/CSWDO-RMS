@@ -416,7 +416,9 @@ class ClientController extends Controller
     {
         $date = \Carbon\Carbon::now()->format('F j, Y');
         $apiKey = config('semaphore.api_key', env('SEMAPHORE_API_KEY'));
-        $message = "Magandang araw, $firstName $lastName! Pwede na po kayong pumunta sa CSWDO simula sa $date para kunin ang inyong hinihinging tulong. Maraming salamat.";
+        $message = "Magandang araw, $firstName $lastName! Pwede na po kayong pumunta sa CSWDO simula sa $date para kunin ang inyong hinihinging tulong. Maaring magdala ng kahit anong valid ID. Narito ang address ng CSWDO Taguig: 
+             \nCSWDO Taguig, 2nd Floor, Taguig City Hall, Brgy. Pinagsama, Taguig City. 
+             \nMaraming salamat.";
         $senderName = 'CSWDORMS';
 
         // Check if API key is available

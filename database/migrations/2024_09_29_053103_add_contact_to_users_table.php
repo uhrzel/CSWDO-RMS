@@ -12,12 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-
-            $table->string('middlename')->nullable();
-            $table->string('city');
-            $table->string('barangay');
-            $table->integer('age');
-            $table->date('birthday')->nullable();
+            // Add the contact column
+            $table->string('contact')->nullable();  // Nullable if it's optional
         });
     }
 
@@ -27,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-
-            $table->dropColumn(['middlename', 'city', 'barangay', 'age', 'birthday']);
+            // Remove the contact column
+            $table->dropColumn('contact');
         });
     }
 };

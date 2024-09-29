@@ -7,8 +7,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class AdminRegisterController extends Controller
 {
     use RegistersUsers;
 
@@ -17,7 +18,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/register';
 
     /**
      * Create a new controller instance.
@@ -26,7 +27,17 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // No middleware applied here
+    }
+
+    /**
+     * Show the registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.admin-register'); // Create this view for your admin registration form
     }
 
     /**
@@ -60,6 +71,26 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'contact' => $data['contact'],
             'password' => Hash::make($data['password']),
+            // Optionally, you can set a role here if needed
+            // 'role' => 'admin',
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->create($request->all());
+
+        // Optionally, you can log the user in immediately after registration
+        // auth()->login($user);
+
+        return redirect($this->redirectTo)->with('success', 'Registration successful!');
     }
 }

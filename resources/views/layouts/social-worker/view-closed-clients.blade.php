@@ -19,44 +19,47 @@
                     <h4>Applicants with Closed Tracking</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Control No.</th>
-                                <th>Name</th>
-                                <th>Suffix </th>
-                                <th>Age</th>
-                                <th>Sex</th>
-                                <th>Date of Birth</th>
-                                <th>Nationality</th>
-                                <th>Contact Number </th>
-                                <th>Case Status </th>
-                            </tr>
-                        </thead>
-                        <tbody id="searchResults">
-                            @foreach ($clients as $client)
-                            <tr>
-                                <td class="controlnumber">{{$client->control_number}}</td>
-                                <td class="fullname">{{ $client->first_name }} {{ $client->last_name }}</td>
-                                <td class="suffix">{{ $client->suffix }}</td>
-                                <td class="age">{{ $client->age }}</td>
-                                <td class="sex">{{ $client->sex }}</td>
-                                <td class="birthday">{{ $client->date_of_birth }}</td>
-                                <td class="nationality">{{ $client->nationality }}</td>
-                                <td class="contactnumber">{{ $client->contact_number }}</td>
-                                <td class="case-status" style="padding: 5px; text-align: center;">
-                                    <span style="
-        background-color: {{ $client->tracking == 'Approve' ? 'green' : 'transparent' }};
-        color: white;
-        padding: 2px 4px;
-        border-radius: 4px;">
-                                        {{ $client->tracking == 'Approve' ? 'Closed' : 'Not Tracking' }}
-                                    </span>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <!-- Wrap table inside a responsive container -->
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Control No.</th>
+                                    <th>Name</th>
+                                    <th>Suffix</th>
+                                    <th>Age</th>
+                                    <th>Sex</th>
+                                    <th>Date of Birth</th>
+                                    <th>Nationality</th>
+                                    <th>Contact Number</th>
+                                    <th>Case Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchResults">
+                                @foreach ($clients as $client)
+                                <tr>
+                                    <td class="controlnumber">{{$client->control_number}}</td>
+                                    <td class="fullname">{{ $client->first_name }} {{ $client->last_name }}</td>
+                                    <td class="suffix">{{ $client->suffix }}</td>
+                                    <td class="age">{{ $client->age }}</td>
+                                    <td class="sex">{{ $client->sex }}</td>
+                                    <td class="birthday">{{ $client->date_of_birth }}</td>
+                                    <td class="nationality">{{ $client->nationality }}</td>
+                                    <td class="contactnumber">{{ $client->contact_number }}</td>
+                                    <td class="case-status" style="padding: 5px; text-align: center;">
+                                        <span style="
+                                            background-color: {{ $client->tracking == 'Approve' ? 'green' : 'transparent' }};
+                                            color: white;
+                                            padding: 2px 4px;
+                                            border-radius: 4px;">
+                                            {{ $client->tracking == 'Approve' ? 'Closed' : 'Not Tracking' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div> <!-- End table-responsive -->
                 </div>
             </div>
         </div>

@@ -82,10 +82,18 @@
             <li class="{{ Request::is('profile/change-password') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('profile/change-password') }}" style="color: white;"><i class="fas fa-key"></i> <span>Change Password</span></a>
             </li>
-            <li class="menu-header">Starter</li>
-            <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('blank-page') }}" style="color: white;"><i class="far fa-square"></i> <span>Blank Page</span></a>
+
+            @if (Auth::user()->role == 'admin')
+            <li class="menu-header">Register</li>
+            <li class="{{ Request::is('register') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('register') }}" style="color: white;"><i class="far fa-square"></i> <span>Register</span></a>
             </li>
+
+            <li class="menu-header">User Logs</li>
+            <li class="{{ Request::is('logs') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('logs') }}" style="color: white;"><i class="far fa-square"></i> <span>Logs</span></a>
+            </li>
+            @endif
         </ul>
     </aside>
 </div>

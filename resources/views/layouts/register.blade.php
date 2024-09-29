@@ -1,18 +1,24 @@
 @extends('layouts.app')
 
+@section('title', 'Blank Page')
+
+@push('style')
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endpush
+
 @section('content')
-<div class="container mt-5">
+<div class="main-content">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header text-center d-flex justify-content-center">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ __('Register User') }}</div>
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('admin.register') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <label for="firstname" class="form-label">{{ __('Firstname') }}</label>
@@ -25,6 +31,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <label for="lastname" class="form-label">{{ __('Lastname') }}</label>
@@ -51,7 +58,7 @@
                             </div>
                         </div>
 
-                    <div class="row mb-3">
+                        <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <label for="contact" class="form-label">{{ __('Contact Number') }}</label>
                                 <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact">
@@ -89,7 +96,6 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
-                                <a href="{{ route('login') }}" class="btn btn-link">{{ __('Login') }}</a>
                             </div>
                         </div>
                     </form>
@@ -99,3 +105,20 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    @if(session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful!',
+        text: '{{ session('
+        success ')}}',
+        confirmButtonText: 'OK'
+    });
+    @endif
+</script>
+@endpush

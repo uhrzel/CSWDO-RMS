@@ -330,20 +330,24 @@
 						<h4 class="mb-3">Services</h4>
 
 						<div class="form-group">
-
 							<?php
+							// Convert client services to an array if not already
 							$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
 							$clientServices = is_array($clientServices) ? $clientServices : [];
 
-							// Define service categories and their available services
+							// Define service categories and their available services with requirements from the database
 							$serviceCategories = [
-								'Burial Assistance' => ['Burial', 'Financial', 'Funeral'],
+								'Burial Assistance' => [
+									'Burial',
+									'Financial',
+									'Funeral'
+								],
 								'Solo Parent Services' => [
 									'Solo Parent = Agency Referral',
-									'Residency Cert',
-									'Medical Cert',
+									'Residency Cert.',
+									'Medical Cert.',
 									'Billing Proof',
-									'Birth Cert',
+									'Birth Cert.',
 									'ID Copy',
 									'Senior Citizen ID (60+)'
 								],
@@ -356,16 +360,15 @@
 								],
 								'After-Care Services' => [
 									'After-Care Services = Valid ID',
-									'Birth Certificate',
-									'Residence Certificate',
+									'Birth Certificate.',
+									'Residence Certificate.',
 									'SCSR',
-									'Medical Records'
+									'Medical Records',
 								],
 								'Poverty Alleviation Program' => [
 									'Poverty Alleviation Program = Valid ID',
 									'Residence Certificate',
 									'Income Certificate',
-									'SCSR',
 									'Application Form'
 								],
 								'Crisis Intervention Unit' => [
@@ -377,15 +380,31 @@
 								]
 							];
 
-							// Check and display available service categories
+							// Display available service categories and their requirements as checkboxes
 							foreach ($serviceCategories as $category => $services) {
 								$filteredServices = array_intersect($services, $clientServices);
+
+								// Display the category only if the client has selected services in that category
 								if (!empty($filteredServices)) {
-									echo "<h5><label>{$category}</label></h5><br>";
+									echo "<h5><label>{$category}</label></h5>";
+									echo "<div class='checkbox-group'>";
+
+									// Display each service in the category
+									foreach ($services as $service) {
+										// Ensure each service is displayed only once
+										$isChecked = in_array($service, $clientServices) ? 'checked' : '';
+										echo "<div class='form-check'>";
+										echo "<input type='checkbox' class='form-check-input' name='services[]' value='{$service}' {$isChecked}>";
+										echo "<label class='form-check-label'>{$service}</label>";
+										echo "</div>";
+									}
+
+									echo "</div><br>";
 								}
 							}
 							?>
 						</div>
+
 
 						<hr>
 						<h6 class="text-muted mb-3">Additional Information</h6>
@@ -1148,7 +1167,6 @@
 										'Poverty Alleviation Program = Valid ID',
 										'Residence Certificate',
 										'Income Certificate',
-										'SCSR.',
 										'Application Form',
 									];
 									?>

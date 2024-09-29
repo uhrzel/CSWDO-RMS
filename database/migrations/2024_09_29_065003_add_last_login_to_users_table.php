@@ -9,17 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-
-            $table->string('middlename')->nullable();
-            $table->string('city');
-            $table->string('barangay');
-            $table->integer('age');
-            $table->date('birthday')->nullable();
+            $table->timestamp('last_login')->nullable(); // Add the last_login column
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -27,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-
-            $table->dropColumn(['middlename', 'city', 'barangay', 'age', 'birthday']);
+            //
         });
     }
 };

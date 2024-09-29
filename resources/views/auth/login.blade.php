@@ -66,9 +66,7 @@
                                     </a>
                                     @endif
                                     <br>
-                                    <a class="btn btn-link" href="{{ route('register') }}">
-                                        {{ __('Register') }}
-                                    </a>
+
                                 </div>
                             </div>
                         </div>

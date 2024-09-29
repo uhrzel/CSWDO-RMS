@@ -69,10 +69,10 @@
 
                         <!-- City Field -->
                         <div class="form-group row">
-                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
                             <div class="col-md-6">
-                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city', $user->city) }}" required autocomplete="city">
-                                @error('city')
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address', $user->city . ', ' . $user->barangay) }}" required autocomplete="address" placeholder="Enter City, Barangay">
+                                @error('address')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -80,24 +80,25 @@
                             </div>
                         </div>
 
-                        <!-- Barangay Field -->
                         <div class="form-group row">
-                            <label for="barangay" class="col-md-4 col-form-label text-md-right">{{ __('Barangay') }}</label>
+                            <label for="contact" class="col-md-4 col-form-label text-md-right">{{ __('Contact No') }}</label>
                             <div class="col-md-6">
-                                <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay', $user->barangay) }}" required autocomplete="barangay">
-                                @error('barangay')
+                                <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact', $user->contact)}}" required autocomplete="contact" placeholder="Enter Contact No">
+                                @error('contact')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                         </div>
+
+
 
                         <!-- Birthday Field -->
                         <div class="form-group row">
                             <label for="birthday" class="col-md-4 col-form-label text-md-right">{{ __('Birthday') }}</label>
                             <div class="col-md-6">
-                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{ old('birthday', $user->birthday) }}" required autocomplete="birthday">
+                                <input id="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror" name="birthday" value="{{ old('birthday', $user->birthday) }}" required autocomplete="birthday" onchange="calculateAge()">
                                 @error('birthday')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -110,7 +111,7 @@
                         <div class="form-group row">
                             <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
                             <div class="col-md-6">
-                                <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age', $user->age) }}" required autocomplete="age">
+                                <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age', $user->age) }}" required autocomplete="age" readonly>
                                 @error('age')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -118,6 +119,27 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <script>
+                            function calculateAge() {
+                                const birthdayInput = document.getElementById('birthday');
+                                const ageInput = document.getElementById('age');
+
+                                const birthday = new Date(birthdayInput.value);
+                                const today = new Date();
+
+                                let age = today.getFullYear() - birthday.getFullYear();
+                                const monthDifference = today.getMonth() - birthday.getMonth();
+
+
+                                if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+                                    age--;
+                                }
+
+                                ageInput.value = age;
+                            }
+                        </script>
+
 
                         <!-- Submit Button -->
                         <div class="form-group row mb-0">
