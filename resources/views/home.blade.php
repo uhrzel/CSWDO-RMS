@@ -147,11 +147,53 @@
             </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Monthly Average with Linear Regression</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="monthlyAverageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Linear Regression</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barangayServiceChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Income per Barangay Prediction</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="averageIncomeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </div>
 </div>
 </section>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-linear-regression"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @push('scripts')
 <script>
     const incomeData = {
@@ -421,6 +463,195 @@
         });
 
         $('#age-group-section').show();
+    }
+
+
+    const monthlyAverages = @json($monthly_average); // Monthly averages from last year (as an array)
+    const predictedClients = @json($predictedClients); // Predicted clients for next year
+    const monthlyAverage = @json($monthly_average); // Monthly average for the previous year
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // Create chart
+    const ctx = document.getElementById('monthlyAverageChart').getContext('2d');
+
+
+    const monthlyAverageChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months, // Set months here
+            datasets: [{
+                    label: 'Average Clients per Month Last Year',
+                    data: Array(12).fill(monthlyAverage), // Spread monthly average across 12 months
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.1
+                },
+                {
+                    label: 'Predicted Clients for Next Year',
+                    data: Array(12).fill(predictedClients), // Spread predicted value across 12 months
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.1
+                },
+                /* {
+                label: 'Monthly Average',
+                data: Array(12).fill(monthlyAverage), // Spread monthly average across 12 months
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderDash: [5, 5], // Dotted line for distinction
+                fill: false
+                } */
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'category',
+                    labels: months
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Clients'
+                    }
+                }
+            }
+        }
+    });
+
+    const barangays = @json($barangays);
+    const barangayServiceCounts = @json($barangayServiceCounts);
+    const servicePredictions = @json($servicePredictions);
+    const averageIncomeData = @json($averageIncomeData); // Pass average income data
+    const predictedAverageIncomeData = @json($predictedAverageIncomeData); // Get predicted income data
+
+
+
+
+    if (barangays.length > 0) {
+        const firstBarangay = barangays[0];
+        const services = Object.keys(barangayServiceCounts[firstBarangay]);
+
+
+        function formatLabel(service) {
+            return service
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase());
+        }
+
+
+        const datasets = services.map(service => ({
+            label: formatLabel(service), // Format service label
+            data: barangays.map(barangay => barangayServiceCounts[barangay][service]),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+        }));
+
+        const predictionDatasets = services.map(service => ({
+            label: `${formatLabel(service)} Predictions`,
+            data: barangays.map(barangay => {
+                const predictions = servicePredictions[barangay][service];
+                if (typeof predictions === 'object' && predictions !== null) {
+                    return Object.values(predictions).reduce((sum, count) => sum + count, 0);
+                } else {
+                    console.warn(`Predictions for ${barangay} and ${service} is not an object or is null:`, predictions);
+                    return 0;
+                }
+            }),
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            type: 'line', // Change type for prediction lines
+        }));
+
+        // Render the chart
+        const ctxservices = document.getElementById('barangayServiceChart').getContext('2d');
+        const barangayServiceChart = new Chart(ctxservices, {
+            type: 'bar', // Main chart type
+            data: {
+                labels: barangays,
+                datasets: [...datasets, ...predictionDatasets],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                },
+            },
+        });
+
+        console.log(predictedAverageIncomeData);
+        console.log(barangays); // Check barangay names
+
+        const predictedIncomeDatasets = [];
+
+        // Remove the loop for 3 years, only keep the prediction dataset if needed
+        const dataset = {
+            label: 'Predicted Average Income',
+            data: barangays.map(barangay => {
+                if (predictedAverageIncomeData[barangay]) {
+                    console.log(`Income for ${barangay}:`, predictedAverageIncomeData[barangay][1]);
+                    return predictedAverageIncomeData[barangay][1] || 0; // Just get the first year for prediction
+                } else {
+                    console.warn(`No data for barangay: ${barangay}`);
+                    return 0; // Default to 0 if not defined
+                }
+            }),
+            backgroundColor: `rgba(75, 192, 192, 0.2)`,
+            borderColor: `rgba(75, 192, 192, 1)`,
+            borderWidth: 1,
+            type: 'line', // Set to line for prediction
+        };
+
+        predictedIncomeDatasets.push(dataset);
+
+        // Define incomeDataset based on averageIncomeData
+        const incomeDataset = {
+            label: 'Average Income',
+            data: barangays.map(barangay => averageIncomeData[barangay] || 0),
+            backgroundColor: `rgba(153, 102, 255, 0.2)`,
+            borderColor: `rgba(153, 102, 255, 1)`,
+            borderWidth: 1,
+        };
+
+        // Render the average income chart
+        const ctxIncome = document.getElementById('averageIncomeChart').getContext('2d');
+        const averageIncomeChart = new Chart(ctxIncome, {
+            type: 'line', // You can change this to 'line' or 'bar' based on your preference
+            data: {
+                labels: barangays,
+                datasets: [incomeDataset, ...predictedIncomeDatasets], // Include the predicted income dataset
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                },
+            },
+        });
+
+
+    } else {
+        console.error('No barangays found');
     }
 </script>
 @endpush
