@@ -326,21 +326,26 @@
 
 						<hr>
 
-						<!-- Services Section -->
 						<h4 class="mb-3">Services</h4>
 
 						<div class="form-group">
 							<?php
-							// Convert client services to an array if not already
+
 							$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
 							$clientServices = is_array($clientServices) ? $clientServices : [];
 
-							// Define service categories and their available services with requirements from the database
+
 							$serviceCategories = [
 								'Burial Assistance' => [
 									'Burial',
 									'Financial',
-									'Funeral'
+									'Funeral',
+									'Crisis Intervention Unit = Valid ID',
+									'Barangay Clearance.',
+									'Medical Certificate.',
+									'Incident Report.',
+									'Funeral Contract.',
+									'Death Certificate.'
 								],
 								'Solo Parent Services' => [
 									'Solo Parent = Agency Referral',
@@ -380,21 +385,24 @@
 								]
 							];
 
-							// Display available service categories and their requirements as checkboxes
+
 							foreach ($serviceCategories as $category => $services) {
 								$filteredServices = array_intersect($services, $clientServices);
 
-								// Display the category only if the client has selected services in that category
+
 								if (!empty($filteredServices)) {
 									echo "<h5><label>{$category}</label></h5>";
 									echo "<div class='checkbox-group'>";
 
-									// Display each service in the category
+
+									echo "<p><strong>Requirements:</strong></p>";
+
+
 									foreach ($services as $service) {
-										// Ensure each service is displayed only once
+
 										$isChecked = in_array($service, $clientServices) ? 'checked' : '';
 										echo "<div class='form-check'>";
-										echo "<input type='checkbox' class='form-check-input' name='services[]' value='{$service}' {$isChecked}>";
+										echo "<input type='checkbox' class='form-check-input' name='services[]' value='{$service}' {$isChecked} onclick='return false;'>"; // prevent checkbox change
 										echo "<label class='form-check-label'>{$service}</label>";
 										echo "</div>";
 									}
@@ -404,6 +412,7 @@
 							}
 							?>
 						</div>
+
 
 
 						<hr>
@@ -931,14 +940,32 @@
 							</style>
 							<div class="form-group">
 								<h2>Services</h2>
+								<?php
+								// Assume $client->services is already available and stores the client's services as an array or JSON.
+								$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+								$clientServices = is_array($clientServices) ? $clientServices : [];
+								?>
+
 								<select id="service-selector-{{ $client->id }}" style="border: none; border-bottom: 1px solid black; outline: none; width: 200px;" class="form-control" onchange="handleServiceChange(this)">
-									<option value="">Select a Service</option>
-									<option value="burial-assistance">Burial Assistance</option>
-									<option value="crisis-intervention">Crisis Intervention Unit</option>
-									<option value="solo-parent">Solo Parent Services</option>
-									<option value="premarriage-counseling">Pre-marriage Counseling</option>
-									<option value="after-care">After-Care Services</option>
-									<option value="poverty-program">Poverty Alleviation Program</option>
+
+
+									<!-- Burial Assistance -->
+									<option value="burial-assistance" <?php echo in_array('Burial Assistance', $clientServices) ? 'selected' : ''; ?>>Burial Assistance</option>
+
+									<!-- Crisis Intervention Unit -->
+									<option value="crisis-intervention" <?php echo in_array('Valid ID', $clientServices) ? 'selected' : ''; ?>>Crisis Intervention Unit</option>
+
+									<!-- Solo Parent Services -->
+									<option value="solo-parent" <?php echo in_array('Solo Parent = Agency Referral', $clientServices) ? 'selected' : ''; ?>>Solo Parent Services</option>
+
+									<!-- Pre-marriage Counseling -->
+									<option value="premarriage-counseling" <?php echo in_array('Pre-marriage Counseling = Valid ID', $clientServices) ? 'selected' : ''; ?>>Pre-marriage Counseling</option>
+
+									<!-- After-Care Services -->
+									<option value="after-care" <?php echo in_array('After-Care Services = Valid ID', $clientServices) ? 'selected' : ''; ?>>After-Care Services</option>
+
+									<!-- Poverty Alleviation Program -->
+									<option value="poverty-program" <?php echo in_array('Poverty Alleviation Program = Valid ID', $clientServices) ? 'selected' : ''; ?>>Poverty Alleviation Program</option>
 								</select>
 
 								<!-- Modal for Burial Assistance -->

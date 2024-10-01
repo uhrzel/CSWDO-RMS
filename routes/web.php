@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/view-closed-clients', [ClientController::class, 'viewClosedClients'])->name('social-worker.view-closed-clients')->middleware('social');
     Route::get('/view-ongoing-clients', [ClientController::class, 'viewOngoingClients'])->name('social-worker.view-ongoing-clients')->middleware('social');
 
+
     //for family members
     Route::post('/social-worker/family/store', [FamilyMemberController::class, 'store'])->name('social-worker.family.store');
     Route::put('/social-worker/family/update/{id}', [FamilyMemberController::class, 'update'])->name('social-worker.family.update');

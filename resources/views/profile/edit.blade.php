@@ -32,7 +32,14 @@
                         <div class="form-group row">
                             <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Firstname') }}</label>
                             <div class="col-md-6">
-                                <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname', $user->firstname) }}" required autocomplete="firstname" autofocus>
+                                <input id="firstname"
+                                    type="text"
+                                    class="form-control @error('firstname') is-invalid @enderror"
+                                    name="firstname"
+                                    value="{{ old('firstname', $user->firstname) }}"
+                                    @if (Auth::user()->role == 'social-worker') readonly @endif
+                                autocomplete="firstname"
+                                autofocus>
                                 @error('firstname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -45,7 +52,7 @@
                         <div class="form-group row">
                             <label for="middlename" class="col-md-4 col-form-label text-md-right">{{ __('Middlename') }}</label>
                             <div class="col-md-6">
-                                <input id="middlename" type="text" class="form-control @error('middlename') is-invalid @enderror" name="middlename" value="{{ old('middlename', $user->middlename) }}" autocomplete="middlename">
+                                <input id="middlename" type="text" class="form-control @error('middlename') is-invalid @enderror" name="middlename" value="{{ old('middlename', $user->middlename) }}" autocomplete="middlename" @if (Auth::user()->role == 'social-worker') readonly @endif>
                                 @error('middlename')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -58,7 +65,7 @@
                         <div class="form-group row">
                             <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Lastname') }}</label>
                             <div class="col-md-6">
-                                <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname', $user->lastname) }}" required autocomplete="lastname">
+                                <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname', $user->lastname) }}" autocomplete="lastname" @if (Auth::user()->role == 'social-worker') readonly @endif>
                                 @error('lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -283,23 +283,21 @@ class HomeController extends Controller
         return response()->json($requestedServices);
     }
  */
-
     public function getMostRequestedServices(Request $request)
     {
         $barangay = $request->input('barangay');
 
-
-
         if ($barangay === 'all') {
+
             $mostRequestedServices = DB::table('clients')
-                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
+                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(IFNULL(services, "[]"), "$[*]")) AS service, COUNT(*) as count'))
                 ->groupBy('service')
                 ->orderBy('count', 'DESC')
                 ->limit(5)
                 ->get();
         } else {
             $mostRequestedServices = DB::table('clients')
-                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(services, "$[*]")) AS service, COUNT(*) as count'))
+                ->select(DB::raw('JSON_UNQUOTE(JSON_EXTRACT(IFNULL(services, "[]"), "$[*]")) AS service, COUNT(*) as count'))
                 ->where('barangay', $barangay)
                 ->groupBy('service')
                 ->orderBy('count', 'DESC')
@@ -316,7 +314,6 @@ class HomeController extends Controller
             'Poverty Alleviation Program' => ['Poverty Alleviation Program = Valid ID', 'Residence Certificate', 'Income Certificate',  'Application Form'],
         ];
 
-
         $unrelatedServices = [
             'Refrigerator',
             'Washing Machine',
@@ -326,17 +323,17 @@ class HomeController extends Controller
             'Electric Fan'
         ];
 
-
         $requestedServices = $mostRequestedServices->map(function ($serviceCount) use ($requirements, $unrelatedServices) {
             $serviceArray = json_decode($serviceCount->service);
-            $matchedService = null;
 
+            if (empty($serviceArray)) {
+                return null;
+            }
 
             $filteredServiceArray = array_diff($serviceArray, $unrelatedServices);
-
+            $matchedService = null;
 
             foreach ($requirements as $serviceName => $req) {
-
                 if (array_intersect($req, $filteredServiceArray)) {
                     $matchedService = $serviceName;
                     break;
@@ -345,10 +342,11 @@ class HomeController extends Controller
 
             $serviceCount->service = $matchedService ?? $serviceCount->service;
             return $serviceCount;
-        });
+        })->filter();
 
-        return response()->json($requestedServices);
+        return response()->json($requestedServices->values());
     }
+
 
 
     public function getGenderDistribution(Request $request)

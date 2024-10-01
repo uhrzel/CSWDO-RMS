@@ -23,6 +23,7 @@ class ProfileController extends Controller
             'email' => 'required|email|max:255',
             'address' => 'required|string|max:255',  // Validate the combined address input
             'birthday' => 'required|date',
+            'contact' => 'required|string|max:255',
             'age' => 'required|integer|min:0',
         ]);
 
@@ -42,6 +43,7 @@ class ProfileController extends Controller
         $user->city = $city;  // Set city from parsed address
         $user->barangay = $barangay;  // Set barangay from parsed address
         $user->birthday = $request->input('birthday');
+        $user->contact = $request->input('contact');
         $user->age = $request->input('age');
 
         // Debugging output to see if the data is being set correctly
