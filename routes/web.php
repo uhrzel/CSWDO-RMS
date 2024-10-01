@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAccessClientController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/register', [App\Http\Controllers\HomeController::class, 'blank'])->name('blank');
 
     //fetching social worker
-    Route::get('/social-worker', [ClientController::class, 'caselist'])->name('social-worker.index')->middleware('social');
+    Route::get('/social-worker', [ClientController::class, 'caselist'])->name('social-worker.index');
 
     Route::get('/social-worker/{clientId}', [ClientController::class, 'show'])->name('social-worker.index')->middleware('social');
     // generate pdf
@@ -51,8 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/age-group-services', [HomeController::class, 'getAgeGroupServices']);
 
     // web.php
-    Route::get('/view-closed-clients', [ClientController::class, 'viewClosedClients'])->name('social-worker.view-closed-clients')->middleware('social');
-    Route::get('/view-ongoing-clients', [ClientController::class, 'viewOngoingClients'])->name('social-worker.view-ongoing-clients')->middleware('social');
+    Route::get('/view-closed-clients', [ClientController::class, 'viewClosedClients'])->name('social-worker.view-closed-clients');
+    Route::get('/view-ongoing-clients', [ClientController::class, 'viewOngoingClients'])->name('social-worker.view-ongoing-clients');
 
 
     //for family members

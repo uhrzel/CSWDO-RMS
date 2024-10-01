@@ -51,7 +51,7 @@
             <li class="{{ Request::is('home') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('home') }}" style="color: white;"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            @if (Auth::user()->role == 'social-worker')
+
             <li class="menu-header">Case Listing</li>
             <li class="menu-header">
                 <a href="#" class="dropdown-toggle" onclick="toggleDropdown('caseListingDropdown'); return false;" style="color: white;">
@@ -64,7 +64,7 @@
             -->
                 </ul>
             </li>
-            @endif
+
             @if (Auth::user()->role == 'admin')
             <li class="menu-header">Social Workers</li>
             <li class="{{ Request::is('admin') ? 'active' : '' }}">
