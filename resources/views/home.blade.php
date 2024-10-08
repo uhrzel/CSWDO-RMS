@@ -192,8 +192,6 @@
 </div>
 </section>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-linear-regression"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @push('scripts')
 <script>
     const incomeData = {
