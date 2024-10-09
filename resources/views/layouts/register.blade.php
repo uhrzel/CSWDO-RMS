@@ -31,7 +31,17 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <div class="col-md-8 offset-md-2">
+                                <label for="middlename" class="form-label">{{ __('Middle Name') }}</label>
+                                <input id="middlename" type="text" class="form-control @error('middlename') is-invalid @enderror" name="middlename" value="{{ old('middlename') }}" required autocomplete="middlename">
+                                @error('middlename')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <label for="lastname" class="form-label">{{ __('Lastname') }}</label>

@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client as GuzzleClient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -160,7 +161,8 @@ class ClientController extends Controller
     public function caselist()
     {
         $clients = Client::where('tracking', 'Re-access')->get();
-        return view('layouts.social-worker.index', compact('clients'));
+        $user = Auth::user(); // Get the currently authenticated user
+        return view('layouts.social-worker.index', compact('clients', 'user'));
     }
 
     public function generatePdf($id)

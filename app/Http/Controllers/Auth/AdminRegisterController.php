@@ -50,6 +50,7 @@ class AdminRegisterController extends Controller
     {
         return Validator::make($data, [
             'firstname' => ['required', 'string', 'max:255'],
+            'middlename' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'contact' => ['required', 'string', 'max:255'],
@@ -60,13 +61,14 @@ class AdminRegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array  $data 
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
         return User::create([
             'firstname' => $data['firstname'],
+            'middlename' => $data['middlename'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'contact' => $data['contact'],

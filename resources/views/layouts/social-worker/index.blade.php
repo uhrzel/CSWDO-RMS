@@ -1299,8 +1299,13 @@
 							</div>
 							<div class="col-md-10 form-group">
 								<label for="reviewing">Reviewing Officer (Social Welfare Offices)</label>
-								<input type="text" class="form-control" id="reviewing" name="reviewing" value="{{ $client->reviewing }}" placeholder="Enter Reviewing Officer" style="max-width: 500px; width: 100%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>
+								<input type="text" class="form-control" id="reviewing" name="reviewing"
+									value="{{ old('reviewing', $user->firstname . ' ' . $user->lastname) }}"
+									placeholder="Enter Reviewing Officer"
+									style="max-width: 500px; width: 100%;"
+									{{ $client->eval == 'Done' ? 'readonly' : '' }}>
 							</div>
+
 							<div class="col-md-10 form-group">
 								<label for="approving">Approving Officer</label>
 								<input type="text" class="form-control" id="approving" name="approving" value="{{ $client->approving }}" placeholder="Enter Approving Officer" style="max-width: 500px; width: 100%;" {{ $client->eval == 'Done' ? 'readonly' : '' }}>
@@ -1332,12 +1337,8 @@
 	</div>
 	@endforeach
 
-
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 	<script>
 		function confirmDelete(clientId) {
 			Swal.fire({
@@ -1368,7 +1369,6 @@
 				}
 			});
 		}
-
 
 		function submitEditForm(clientId) {
 			var form = $('#editClientForm' + clientId);

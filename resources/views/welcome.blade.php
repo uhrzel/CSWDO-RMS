@@ -52,32 +52,44 @@
                 <h2 class="mb-5">What We Offer</h2>
             </div>
             <div class="row gx-4 gx-lg-5">
-                <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-folder"></i></span>
-                    <h4><strong>Organized Records</strong></h4>
-                    <p class="text-faded mb-0">Efficiently manage and access records anytime.</p>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-cross"></i></span>
+                    <h4><strong>Burial Assistance</strong></h4>
+                    <p class="text-faded mb-0">Financial and support services for families.</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-shield"></i></span>
-                    <h4><strong>Data Security</strong></h4>
-                    <p class="text-faded mb-0">Ensuring the safety and confidentiality of sensitive information.</p>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-hands-helping"></i></span>
+                    <h4><strong>Crisis Intervention Unit</strong></h4>
+                    <p class="text-faded mb-0">Emergency assistance for individuals in crisis.</p>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
-                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-heart"></i></span>
-                    <h4><strong>Beneficiary Support</strong></h4>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-user-friends"></i></span>
+                    <h4><strong>Solo Parent Services</strong></h4>
                     <p class="text-faded mb-0">
-                        Providing comprehensive assistance to the community.
+                        Support and resources for solo parents.
                     </p>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-check"></i></span>
-                    <h4><strong>Compliance</strong></h4>
-                    <p class="text-faded mb-0">Adhering to legal and regulatory standards.</p>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-ring"></i></span>
+                    <h4><strong>Pre-marriage Counseling</strong></h4>
+                    <p class="text-faded mb-0">Guidance and advice for couples planning to marry.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-heartbeat"></i></span>
+                    <h4><strong>After-care Services</strong></h4>
+                    <p class="text-faded mb-0">
+                        Ongoing support for individuals post-intervention.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-5">
+                    <span class="service-icon rounded-circle mx-auto mb-3"><i class="fas fa-hand-holding-heart"></i></span>
+                    <h4><strong>Poverty Alleviation Program</strong></h4>
+                    <p class="text-faded mb-0">Initiatives to improve quality of life for those in need.</p>
                 </div>
             </div>
-
         </div>
     </section>
+
 
     @include('components.custom-footer')
     <div class="text-center" style="padding: 10px; background-color: #4b78cc; ">

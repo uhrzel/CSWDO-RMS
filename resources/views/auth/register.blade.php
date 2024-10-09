@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                    <div class="row mb-3">
+                        <div class="row mb-3">
                             <div class="col-md-8 offset-md-2">
                                 <label for="contact" class="form-label">{{ __('Contact Number') }}</label>
                                 <input id="contact" type="text" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact">
