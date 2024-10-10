@@ -1340,6 +1340,41 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script>
+		function submitEditForm(clientId) {
+			var form = $('#editClientForm' + clientId);
+			var formData = form.serializeArray(); // Get form data
+
+			form.find('select[name="tracking"]').each(function(index) {
+				var trackingValue = $(this).val(); // Get the value of the current select element
+
+				/* 	console.log('Tracking field ' + index + ':', trackingValue); // Log the value for reference
+				 */
+				// Compare the value with "Approve"
+				if (trackingValue === 'Approve') {
+					Swal.fire({
+						title: 'Are you sure?',
+						text: "You are about to approve and close this case!",
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonText: 'Yes, approve it!',
+						cancelButtonText: 'Cancel'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							// Submit form if confirmed
+							submitFormData(clientId, formData);
+						} else {
+							// Reset selection if canceled
+							this.value = "";
+						}
+					});
+
+				} else if (trackingValue === 'Re-access') {
+					submitFormData(clientId, formData);
+				}
+			});
+		}
+
+
 		function confirmDelete(clientId) {
 			Swal.fire({
 				title: 'Are you sure?',
@@ -1370,38 +1405,8 @@
 			});
 		}
 
-		function submitEditForm(clientId) {
-			var form = $('#editClientForm' + clientId);
-			var formData = form.serializeArray(); // Get form data as an array of objects
 
-			// Get the appliances values and convert to an array
-			// Get the appliances values and convert to an array
-			var appliances = form.find('input[name="appliances[]"]:checked').map(function() {
-				return $(this).val();
-			}).get();
-
-			// Get the services values and convert to an array
-			var services = form.find('input[name="services[]"]:checked').map(function() {
-				return $(this).val();
-			}).get();
-
-			// Add appliances to formData
-			appliances.forEach(function(appliance) {
-				formData.push({
-					name: 'appliances[]',
-					value: appliance
-				});
-			});
-
-			// Add services to formData
-			services.forEach(function(service) {
-				formData.push({
-					name: 'services[]',
-					value: service
-				});
-			});
-
-
+		function submitFormData(clientId, formData) {
 			var url = '/social-worker/update/' + clientId;
 
 			$.ajax({
