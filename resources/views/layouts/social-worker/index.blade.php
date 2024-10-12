@@ -33,11 +33,12 @@
 								<th>Nationality</th>
 								<th>Contact Number </th>
 								<th>Case Status </th>
+								<th>Assigned Officer</th>
 								<th>View</th>
 								<th>Family Member</th>
-								@if(auth()->user()->role === 'social-worker')
+
 								<th>Edit</th>
-								@endif
+
 
 							</tr>
 						</thead>
@@ -65,7 +66,7 @@
 									</span>
 								</td>
 
-
+								<td>{{ old('reviewing', $user->reviewing) }}</td>
 								<td>
 									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#viewClientModal{{ $client->id }}">
 										<i class="fas fa-eye"></i>
@@ -76,13 +77,13 @@
 										<i class="fas fa-user-edit"></i>
 									</button>
 								</td>
-								@if(auth()->user()->role === 'social-worker')
+
 								<td>
 									<button class="btn btn-primary" data-toggle="modal" data-target="#openEditModal{{ $client->id }}">
 										<i class="fas fa-edit"></i>
 									</button>
 								</td>
-								@endif
+
 
 								<!-- <td>
 									<form action="{{ route('social-worker.delete', $client->id) }}" method="POST" class="d-inline" id="delete-form-{{ $client->id }}">
