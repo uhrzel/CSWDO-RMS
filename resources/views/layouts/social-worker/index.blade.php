@@ -1042,6 +1042,16 @@
 
 												if (selectedService === 'burial-assistance') {
 													$('#burial-assistance-modal-{{ $client->id }}').modal('show');
+												} else if (selectedService === 'crisis-intervention') {
+													$('#crisis-intervention-modal-{{ $client->id }}').modal('show');
+												} else if (selectedService === 'solo-parent') {
+													$('#solo-parent-modal-{{ $client->id }}').modal('show');
+												} else if (selectedService === 'premarriage-counseling') {
+													$('#premarriage-counseling-modal-{{ $client->id }}').modal('show');
+												} else if (selectedService === 'after-care') {
+													$('#after-care-modal-{{ $client->id }}').modal('show');
+												} else if (selectedService === 'poverty-program') {
+													$('#poverty-program-modal-{{ $client->id }}').modal('show');
 												}
 											}
 										}
@@ -1087,137 +1097,224 @@
 								</script>
 
 
-								<!-- Crisis Intervention Unit Section -->
-								<div class="form-check-row hidden" id="crisis-intervention-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = [
-										'Valid ID',
-										'Residence Certificate or Barangay Clearance',
-										'Clinical abstract/medical certificate',
-										'Police Report or Incident Report',
-										'Funeral contract and registered death certificate. (if applicable)',
-									];
-									$normalizedClientServices = array_map('strtolower', $clientServices);
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array(strtolower($service), $normalizedClientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">{{ $service }}</label>
+								<!-- Crisis Intervention Modal -->
+								<div class="modal fade" id="crisis-intervention-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="crisisInterventionModalLabel-{{ $client->id }}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="crisisInterventionModalLabel-{{ $client->id }}">Crisis Intervention Details</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<!-- Content from your PHP code -->
+												<?php
+												$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+												$clientServices = is_array($clientServices) ? $clientServices : [];
+												$services = [
+													'Valid ID',
+													'Residence Certificate or Barangay Clearance',
+													'Clinical abstract/medical certificate',
+													'Police Report or Incident Report',
+													'Funeral contract and registered death certificate. (if applicable)',
+												];
+												$normalizedClientServices = array_map('strtolower', $clientServices);
+												?>
+												@foreach($services as $service)
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array(strtolower($service), $normalizedClientServices) ? 'checked' : '' }}>
+													<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">{{ $service }}</label>
+												</div>
+												@endforeach
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+											</div>
+										</div>
 									</div>
-									@endforeach
 								</div>
 
-								<!-- Solo Parent Services Section -->
-								<div class="form-check-row hidden" id="solo-parent-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = [
-										'Solo Parent = Agency Referral',
-										'Residency Cert.',
-										'Medical Cert.',
-										'Billing Proof',
-										'Birth Cert.',
-										'ID Copy',
-										'Senior Citizen ID (60+)'
-									];
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-											@if ($service === 'Solo Parent = Agency Referral')
-											Agency Referral
-											@else
-											{{ $service }}
-											@endif
-										</label>
+								<div class="modal fade" id="solo-parent-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="soloParentModalLabel-{{ $client->id }}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="soloParentModalLabel-{{ $client->id }}">Solo Parent Details</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<?php
+												$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+												$clientServices = is_array($clientServices) ? $clientServices : [];
+												$services = [
+													'Solo Parent = Agency Referral',
+													'Residency Cert.',
+													'Medical Cert.',
+													'Billing Proof',
+													'Birth Cert.',
+													'ID Copy',
+													'Senior Citizen ID (60+)'
+												];
+												?>
+												@foreach($services as $service)
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+													<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
+														@if ($service === 'Solo Parent = Agency Referral')
+														Agency Referral
+														@else
+														{{ $service }}
+														@endif
+													</label>
+												</div>
+												@endforeach
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+											</div>
+										</div>
 									</div>
-									@endforeach
 								</div>
 
 								<!-- Pre-marriage Counseling Section -->
-								<div class="form-check-row hidden" id="premarriage-counseling-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = [
-										'Pre-marriage Counseling = Valid ID',
-										'Birth Certificate',
-										'CENOMAR',
-										'Barangay Clearance',
-										'Passport-sized Photos',
-									];
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-											@if ($service === 'Pre-marriage Counseling = Valid ID')
-											Valid ID
-											@else
-											{{ $service }}
-											@endif
-										</label>
+
+
+								<div class="modal fade" id="premarriage-counseling-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="premarriageCounselingModalLabel-{{ $client->id }}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="premarriageCounselingModalLabel-{{ $client->id }}">Pre Marriaging Details</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<?php
+												$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+												$clientServices = is_array($clientServices) ? $clientServices : [];
+												$services = [
+													'Pre-marriage Counseling = Valid ID',
+													'Birth Certificate',
+													'CENOMAR',
+													'Barangay Clearance',
+													'Passport-sized Photos',
+												];
+												?>
+												@foreach($services as $service)
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+													<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
+														@if ($service === 'Pre-marriage Counseling = Valid ID')
+														Valid ID
+														@else
+														{{ $service }}
+														@endif
+													</label>
+												</div>
+												@endforeach
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+											</div>
+										</div>
 									</div>
-									@endforeach
 								</div>
 
-								<!-- After-Care Services Section -->
-								<div class="form-check-row hidden" id="after-care-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = [
-										'After-Care Services = Valid ID',
-										'Birth Certificate.',
-										'Residence Certificate.',
-										'SCSR',
-										'Medical Records',
-									];
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-											@if ($service === 'After-Care Services = Valid ID')
-											Valid ID
-											@else
-											{{ $service }}
-											@endif
-										</label>
+
+
+								<div class="modal fade" id="after-care-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="afterCareModalLabel-{{ $client->id }}" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="afterCareModalLabel-{{ $client->id }}">After Care Details</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<?php
+												$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+												$clientServices = is_array($clientServices) ? $clientServices : [];
+												$services = [
+													'After-Care Services = Valid ID',
+													'Birth Certificate.',
+													'Residence Certificate.',
+													'SCSR',
+													'Medical Records',
+												];
+												?>
+												@foreach($services as $service)
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+													<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
+														@if ($service === 'After-Care Services = Valid ID')
+														Valid ID
+														@else
+														{{ $service }}
+														@endif
+													</label>
+												</div>
+												@endforeach
+
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+											</div>
+										</div>
 									</div>
-									@endforeach
 								</div>
 
 								<!-- Poverty Alleviation Program Section -->
 								<div class="form-check-row hidden" id="poverty-program-{{ $client->id }}">
-									<?php
-									$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
-									$clientServices = is_array($clientServices) ? $clientServices : [];
-									$services = [
-										'Poverty Alleviation Program = Valid ID',
-										'Residence Certificate',
-										'Income Certificate',
-										'Application Form',
-									];
-									?>
-									@foreach($services as $service)
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
-										<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
-											@if ($service === 'Poverty Alleviation Program = Valid ID')
-											Valid ID
-											@else
-											{{ $service }}
-											@endif
-										</label>
-									</div>
-									@endforeach
+
 								</div>
 							</div>
+
+							<div class="modal fade" id="poverty-program-modal-{{ $client->id }}" tabindex="-1" role="dialog" aria-labelledby="povertyProgramModalLabel-{{ $client->id }}" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="povertyProgramModalLabel-{{ $client->id }}">Poverty Program Details</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<?php
+											$clientServices = is_array($client->services) ? $client->services : json_decode($client->services, true);
+											$clientServices = is_array($clientServices) ? $clientServices : [];
+											$services = [
+												'Poverty Alleviation Program = Valid ID',
+												'Residence Certificate',
+												'Income Certificate',
+												'Application Form',
+											];
+											?>
+											@foreach($services as $service)
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" name="services[]" value="{{ $service }}" id="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}" {{ in_array($service, $clientServices) ? 'checked' : '' }}>
+												<label class="form-check-label" for="{{ strtolower(str_replace(' ', '-', $service)) }}-{{ $client->id }}">
+													@if ($service === 'Poverty Alleviation Program = Valid ID')
+													Valid ID
+													@else
+													{{ $service }}
+													@endif
+												</label>
+											</div>
+											@endforeach
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
 
 							<script>
 								document.addEventListener('DOMContentLoaded', function() {
