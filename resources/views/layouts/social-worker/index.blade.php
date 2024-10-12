@@ -66,7 +66,7 @@
 									</span>
 								</td>
 
-								<td>{{ old('reviewing', $user->reviewing) }}</td>
+								<td>{{$client->reviewing}}</td>
 								<td>
 									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#viewClientModal{{ $client->id }}">
 										<i class="fas fa-eye"></i>
