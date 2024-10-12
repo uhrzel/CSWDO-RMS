@@ -35,8 +35,10 @@
 								<th>Case Status </th>
 								<th>View</th>
 								<th>Family Member</th>
+								@if(auth()->user()->role === 'social-worker')
 								<th>Edit</th>
-								<!-- <th>Delete</th> -->
+								@endif
+
 							</tr>
 						</thead>
 						<tbody id="searchResults">
@@ -74,11 +76,14 @@
 										<i class="fas fa-user-edit"></i>
 									</button>
 								</td>
+								@if(auth()->user()->role === 'social-worker')
 								<td>
 									<button class="btn btn-primary" data-toggle="modal" data-target="#openEditModal{{ $client->id }}">
 										<i class="fas fa-edit"></i>
 									</button>
 								</td>
+								@endif
+
 								<!-- <td>
 									<form action="{{ route('social-worker.delete', $client->id) }}" method="POST" class="d-inline" id="delete-form-{{ $client->id }}">
 										@csrf
@@ -464,7 +469,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" onclick="generatePdf({{ $client->id }})">Generate PDF</button>
+					<button type="button" class="btn btn-danger" onclick="generatePdf({{ $client->id }})">
+						<i class="fas fa-file-pdf"></i> Generate PDF
+					</button>
 
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
@@ -1326,6 +1333,10 @@
 								<button type="button" class="btn btn-primary" onclick="submitEditForm({{ $client->id }})">
 									<i class="fas fa-save"></i> Update
 								</button>
+								<button type="button" class="btn btn-danger" onclick="generatePdf({{ $client->id }})">
+									<i class="fas fa-file-pdf"></i> Generate PDF
+								</button>
+
 							</div>
 						</div>
 					</form>
@@ -1600,12 +1611,27 @@
 													</div>
 													<div class="form-group">
 														<label for="fam_birthday">Birthday</label>
-														<input type="date" name="fam_birthday" class="form-control" value="{{ $familyMember->fam_birthday }}">
+														<input type="date" name="fam_birthday" id="edit_fam_birthday" class="form-control" value="{{ $familyMember->fam_birthday }}">
 													</div>
 													<div class="form-group">
 														<label for="fam_age">Age</label>
-														<input type="text" name="fam_age" class="form-control" value="{{ $familyMember->fam_age }}">
+														<input type="text" name="fam_age" id="edit_fam_age" class="form-control" readonly>
 													</div>
+													<script>
+														document.getElementById('edit_fam_birthday').addEventListener('change', function() {
+															const birthday = new Date(this.value);
+															const today = new Date();
+															let age = today.getFullYear() - birthday.getFullYear();
+															const monthDiff = today.getMonth() - birthday.getMonth();
+
+															if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+																age--;
+															}
+
+															document.getElementById('edit_fam_age').value = age;
+														});
+													</script>
+
 													<div class="form-group">
 														<label for="fam_gender">Gender</label>
 														<select name="fam_gender" class="form-control">
@@ -1703,12 +1729,29 @@
 
 						<div class="form-group">
 							<label for="fam_birthday">Birthday</label>
-							<input type="date" name="fam_birthday" class="form-control">
+							<input type="date" name="fam_birthday" id="fam_birthday" class="form-control">
 						</div>
 						<div class="form-group">
 							<label for="fam_age">Age</label>
-							<input type="text" name="fam_age" class="form-control">
+							<input type="text" name="fam_age" id="fam_age" class="form-control" readonly>
 						</div>
+						<script>
+							document.getElementById('fam_birthday').addEventListener('change', function() {
+								const birthday = new Date(this.value);
+								const today = new Date();
+								let age = today.getFullYear() - birthday.getFullYear();
+								const monthDiff = today.getMonth() - birthday.getMonth();
+
+								// Adjust age if the birthday hasn't occurred yet this year
+								if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+									age--;
+								}
+
+								// Set the calculated age in the age input field
+								document.getElementById('fam_age').value = age;
+							});
+						</script>
+
 						<div class="form-group">
 							<label for="fam_gender">Gender</label>
 							<select name="fam_gender" class="form-control">

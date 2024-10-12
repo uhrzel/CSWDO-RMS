@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SocialWorkerAccountController extends Controller
 {
-   
+
     public function index()
     {
         // Fetch all users with the role of 'social-worker'
@@ -25,11 +25,13 @@ class SocialWorkerAccountController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
         ]);
 
-        $worker->name = $request->input('name');
+        $worker->firstname = $request->input('firstname');
+        $worker->lastname = $request->input('lastname');
         $worker->email = $request->input('email');
         $worker->save();
 

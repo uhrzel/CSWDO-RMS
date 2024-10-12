@@ -59,9 +59,10 @@
                             <td class="email">{{ $worker->email }}</td>
                             <!--   <td class="email">{{ $worker->password }}</td> -->
                             <td>
-                                <button class="btn btn-primary" onclick="openEditModal({{ $worker->id }}, '{{ $worker->name }}', '{{ $worker->email }}')">
+                                <button class="btn btn-primary" onclick="openEditModal({{ $worker->id }}, '{{ $worker->firstname }}', '{{ $worker->lastname }}', '{{ $worker->email }}')">
                                     <i class="fas fa-edit"></i>
                                 </button>
+
                             </td>
 
                             <td>
@@ -117,8 +118,12 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -134,13 +139,15 @@
     </div>
 </div>
 
+
 <script>
-    function openEditModal(id, name, email) {
+    function openEditModal(id, firstname, lastname, email) {
         // Set form action URL
         document.getElementById('editForm').action = `/admin/update/${id}`;
 
         // Set form field values
-        document.getElementById('name').value = name;
+        document.getElementById('firstname').value = firstname;
+        document.getElementById('lastname').value = lastname;
         document.getElementById('email').value = email;
 
         // Show modal
