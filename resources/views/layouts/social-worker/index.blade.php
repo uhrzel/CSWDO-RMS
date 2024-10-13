@@ -384,10 +384,10 @@
 								],
 								'Crisis Intervention Unit' => [
 									'Valid ID',
-									'Residence Certificate or Barangay Clearance',
-									'Clinical abstract/medical certificate',
-									'Police Report or Incident Report',
-									'Funeral contract and registered death certificate (if applicable)'
+									'Residence Certificate Or Barangay Clearance',
+									'Clinical Abstract Medical Certificate',
+									'Police Report Or Incident Report',
+									'Funeral Contract And Registered Death Certificate. (if Applicable)'
 								]
 							];
 
@@ -1116,7 +1116,7 @@
 												$services = [
 													'Valid ID',
 													'Residence Certificate or Barangay Clearance',
-													'Clinical abstract/medical certificate',
+													'Clinical abstract medical certificate',
 													'Police Report or Incident Report',
 													'Funeral contract and registered death certificate. (if applicable)',
 												];
