@@ -1749,8 +1749,30 @@
 													</div>
 													<div class="form-group">
 														<label for="fam_education">Education</label>
-														<input type="text" name="fam_education" class="form-control" value="{{ $familyMember->fam_education }}">
+														<select name="fam_education" class="form-control" id="fam_education">
+															<option value="" disabled {{ empty($familyMember->fam_education) ? 'selected' : '' }}>Select Education</option>
+															<option value="Grade 1" {{ $familyMember->fam_education == 'Grade 1' ? 'selected' : '' }}>Grade 1</option>
+															<option value="Grade 2" {{ $familyMember->fam_education == 'Grade 2' ? 'selected' : '' }}>Grade 2</option>
+															<option value="Grade 3" {{ $familyMember->fam_education == 'Grade 3' ? 'selected' : '' }}>Grade 3</option>
+															<option value="Grade 4" {{ $familyMember->fam_education == 'Grade 4' ? 'selected' : '' }}>Grade 4</option>
+															<option value="Grade 5" {{ $familyMember->fam_education == 'Grade 5' ? 'selected' : '' }}>Grade 5</option>
+															<option value="Grade 6" {{ $familyMember->fam_education == 'Grade 6' ? 'selected' : '' }}>Grade 6</option>
+															<option value="Grade 7" {{ $familyMember->fam_education == 'Grade 7' ? 'selected' : '' }}>Grade 7</option>
+															<option value="Grade 8" {{ $familyMember->fam_education == 'Grade 8' ? 'selected' : '' }}>Grade 8</option>
+															<option value="Grade 9" {{ $familyMember->fam_education == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+															<option value="Grade 10" {{ $familyMember->fam_education == 'Grade 10' ? 'selected' : '' }}>Grade 10</option>
+															<option value="Grade 11" {{ $familyMember->fam_education == 'Grade 11' ? 'selected' : '' }}>Grade 11</option>
+															<option value="Grade 12" {{ $familyMember->fam_education == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+															<option value="College 1st Year" {{ $familyMember->fam_education == 'College 1st Year' ? 'selected' : '' }}>College 1st Year</option>
+															<option value="College 2nd Year" {{ $familyMember->fam_education == 'College 2nd Year' ? 'selected' : '' }}>College 2nd Year</option>
+															<option value="College 3rd Year" {{ $familyMember->fam_education == 'College 3rd Year' ? 'selected' : '' }}>College 3rd Year</option>
+															<option value="College 4th Year" {{ $familyMember->fam_education == 'College 4th Year' ? 'selected' : '' }}>College 4th Year</option>
+															<option value="College Graduate" {{ $familyMember->fam_education == 'College Graduate' ? 'selected' : '' }}>College Graduate</option>
+															<option value="Postgraduate" {{ $familyMember->fam_education == 'Postgraduate' ? 'selected' : '' }}>Postgraduate</option>
+															<option value="Other" {{ $familyMember->fam_education == 'Other' ? 'selected' : '' }}>Other</option>
+														</select>
 													</div>
+
 													<div class="form-group">
 														<label for="fam_occupation">Occupation</label>
 														<input type="text" name="fam_occupation" class="form-control" value="{{ $familyMember->fam_occupation }}">
@@ -1871,8 +1893,30 @@
 						</div>
 						<div class="form-group">
 							<label for="fam_education">Education</label>
-							<input type="text" name="fam_education" class="form-control">
+							<select name="fam_education" class="form-control" id="fam_education">
+								<option value="" disabled {{ empty($familyMember->fam_education) ? 'selected' : '' }}>Select Education</option>
+								<option value="Grade 1" {{ $familyMember->fam_education == 'Grade 1' ? 'selected' : '' }}>Grade 1</option>
+								<option value="Grade 2" {{ $familyMember->fam_education == 'Grade 2' ? 'selected' : '' }}>Grade 2</option>
+								<option value="Grade 3" {{ $familyMember->fam_education == 'Grade 3' ? 'selected' : '' }}>Grade 3</option>
+								<option value="Grade 4" {{ $familyMember->fam_education == 'Grade 4' ? 'selected' : '' }}>Grade 4</option>
+								<option value="Grade 5" {{ $familyMember->fam_education == 'Grade 5' ? 'selected' : '' }}>Grade 5</option>
+								<option value="Grade 6" {{ $familyMember->fam_education == 'Grade 6' ? 'selected' : '' }}>Grade 6</option>
+								<option value="Grade 7" {{ $familyMember->fam_education == 'Grade 7' ? 'selected' : '' }}>Grade 7</option>
+								<option value="Grade 8" {{ $familyMember->fam_education == 'Grade 8' ? 'selected' : '' }}>Grade 8</option>
+								<option value="Grade 9" {{ $familyMember->fam_education == 'Grade 9' ? 'selected' : '' }}>Grade 9</option>
+								<option value="Grade 10" {{ $familyMember->fam_education == 'Grade 10' ? 'selected' : '' }}>Grade 10</option>
+								<option value="Grade 11" {{ $familyMember->fam_education == 'Grade 11' ? 'selected' : '' }}>Grade 11</option>
+								<option value="Grade 12" {{ $familyMember->fam_education == 'Grade 12' ? 'selected' : '' }}>Grade 12</option>
+								<option value="College 1st Year" {{ $familyMember->fam_education == 'College 1st Year' ? 'selected' : '' }}>College 1st Year</option>
+								<option value="College 2nd Year" {{ $familyMember->fam_education == 'College 2nd Year' ? 'selected' : '' }}>College 2nd Year</option>
+								<option value="College 3rd Year" {{ $familyMember->fam_education == 'College 3rd Year' ? 'selected' : '' }}>College 3rd Year</option>
+								<option value="College 4th Year" {{ $familyMember->fam_education == 'College 4th Year' ? 'selected' : '' }}>College 4th Year</option>
+								<option value="College Graduate" {{ $familyMember->fam_education == 'College Graduate' ? 'selected' : '' }}>College Graduate</option>
+								<option value="Postgraduate" {{ $familyMember->fam_education == 'Postgraduate' ? 'selected' : '' }}>Postgraduate</option>
+								<option value="Other" {{ $familyMember->fam_education == 'Other' ? 'selected' : '' }}>Other</option>
+							</select>
 						</div>
+
 						<div class="form-group">
 							<label for="fam_occupation">Occupation</label>
 							<input type="text" name="fam_occupation" class="form-control">

@@ -26,11 +26,13 @@ class SocialWorkerAccountController extends Controller
 
         $request->validate([
             'firstname' => 'required|string|max:255',
+            'middlename' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
         ]);
 
         $worker->firstname = $request->input('firstname');
+        $worker->middlename = $request->input('middlename');
         $worker->lastname = $request->input('lastname');
         $worker->email = $request->input('email');
         $worker->save();

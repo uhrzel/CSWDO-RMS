@@ -59,7 +59,7 @@
                             <td class="email">{{ $worker->email }}</td>
                             <!--   <td class="email">{{ $worker->password }}</td> -->
                             <td>
-                                <button class="btn btn-primary" onclick="openEditModal({{ $worker->id }}, '{{ $worker->firstname }}', '{{ $worker->lastname }}', '{{ $worker->email }}')">
+                                <button class="btn btn-primary" onclick="openEditModal({{ $worker->id }}, '{{ $worker->firstname }}','{{ $worker->middlename }}', '{{ $worker->lastname }}', '{{ $worker->email }}')">
                                     <i class="fas fa-edit"></i>
                                 </button>
 
@@ -122,6 +122,10 @@
                         <input type="text" class="form-control" id="firstname" name="firstname" required>
                     </div>
                     <div class="form-group">
+                        <label for="middlename">Middle Name</label>
+                        <input type="text" class="form-control" id="middlename" name="middlename" required>
+                    </div>
+                    <div class="form-group">
                         <label for="lastname">Last Name</label>
                         <input type="text" class="form-control" id="lastname" name="lastname" required>
                     </div>
@@ -141,12 +145,13 @@
 
 
 <script>
-    function openEditModal(id, firstname, lastname, email) {
+    function openEditModal(id, firstname, middlename, lastname, email) {
         // Set form action URL
         document.getElementById('editForm').action = `/admin/update/${id}`;
 
         // Set form field values
         document.getElementById('firstname').value = firstname;
+        document.getElementById('middlename').value = middlename;
         document.getElementById('lastname').value = lastname;
         document.getElementById('email').value = email;
 
