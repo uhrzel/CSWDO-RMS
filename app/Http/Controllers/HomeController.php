@@ -88,6 +88,7 @@ class HomeController extends Controller
             'West Rembo',
         ];
 
+        // Services and Predictions
         $services = [
             'Burial Assistance',
             'Crisis Intervention Unit',
@@ -97,24 +98,19 @@ class HomeController extends Controller
             'Poverty Alleviation Program',
         ];
 
-
         $servicePredictions = [];
         $barangayServiceCounts = [];
 
-
         foreach ($barangays as $barangay) {
             foreach ($services as $service) {
-
                 $clientsLastYearWithService = Client::where('barangay', $barangay)
                     ->where('services', 'LIKE', '%' . $service . '%')
                     ->whereYear('created_at', $previousYear)
                     ->get();
 
-
                 $monthlyData = $clientsLastYearWithService->groupBy(function ($date) {
                     return $date->created_at->format('m');
                 });
-
 
                 $monthlyAverages = [];
                 for ($month = 1; $month <= 12; $month++) {
@@ -125,53 +121,41 @@ class HomeController extends Controller
                 $totalMonthlyClients = array_sum($monthlyAverages);
                 $monthlyAverage = count($monthlyAverages) > 0 ? $totalMonthlyClients / count($monthlyAverages) : 0;
 
-
                 $barangayServiceCounts[$barangay][$service] = $totalMonthlyClients;
-
 
                 $predictedNextYears = [];
                 for ($year = 1; $year <= 3; $year++) {
                     $predictedNextYears[$year] = intval($monthlyAverage * 12);
                 }
 
-
                 $servicePredictions[$barangay][$service] = $predictedNextYears;
             }
         }
 
+        // Income Ranges
         $incomeRanges = [
             'No Income' => 0,
-            '100 PHP - 500 PHP' => 300, // Average: 300
-            '500 PHP - 1000 PHP' => 750, // Average: 750
-            '1000 PHP - 2000 PHP' => 1500, // Average: 1500
-            '2000 PHP - 5000 PHP' => 3500, // Average: 3500
-            '5000 PHP - 6000 PHP' => 5500, // Average: 5500
-            '6000 PHP - 7000 PHP' => 6500, // Average: 6500
-            '7000 PHP - 8000 PHP' => 7500, // Average: 7500
-            '8000 PHP - 9000 PHP' => 8500, // Average: 8500
-            '9000 PHP - 10,000 PHP' => 9500, // Average: 9500
-            'Above 20,000 PHP' => 20000, // Assuming 20,000 as minimum
+            '100 PHP - 500 PHP' => 300,
+            '500 PHP - 1000 PHP' => 750,
+            '1000 PHP - 2000 PHP' => 1500,
+            '2000 PHP - 5000 PHP' => 3500,
+            '5000 PHP - 6000 PHP' => 5500,
+            '6000 PHP - 7000 PHP' => 6500,
+            '7000 PHP - 8000 PHP' => 7500,
+            '8000 PHP - 9000 PHP' => 8500,
+            '9000 PHP - 10,000 PHP' => 9500,
+            'Above 20,000 PHP' => 20000,
         ];
 
+        // Calculate barangay income totals and counts
         $barangayIncomeTotals = [];
         $barangayIncomeCounts = [];
 
         foreach ($barangays as $barangay) {
             $clientsInBarangay = Client::where('barangay', $barangay)->get();
             foreach ($clientsInBarangay as $client) {
-
                 $incomeRange = $client->monthly_income;
-                $income = 0;
-                if (array_key_exists($incomeRange, $incomeRanges)) {
-                    $income = $incomeRanges[$incomeRange]; // Get the numeric value
-                } elseif (preg_match('/(\d+)\s*PHP\s*-\s*(\d+)\s*PHP/', $incomeRange, $matches)) {
-                    // If income is in range format, calculate the average
-                    $minIncome = (int)$matches[1];
-                    $maxIncome = (int)$matches[2];
-                    $income = ($minIncome + $maxIncome) / 2;
-                } else {
-                    $income = 0;
-                }
+                $income = isset($incomeRanges[$incomeRange]) ? $incomeRanges[$incomeRange] : 0;
 
                 if (!isset($barangayIncomeTotals[$barangay])) {
                     $barangayIncomeTotals[$barangay] = 0;
@@ -182,28 +166,35 @@ class HomeController extends Controller
             }
         }
 
+        // Calculate average income per barangay
         $barangayAverageIncome = [];
         foreach ($barangayIncomeTotals as $barangay => $total) {
             $average = $barangayIncomeCounts[$barangay] > 0 ? $total / $barangayIncomeCounts[$barangay] : 0;
             $barangayAverageIncome[$barangay] = $average;
         }
-        $growthRate = 0.05; // 5% growth rate
 
+        // Calculate predicted average income for the next 3 years
         $predictedAverageIncomeData = [];
+        $growthRate = 0.05; // 5% growth rate
 
         foreach ($barangayAverageIncome as $barangay => $averageIncome) {
             $predictedIncome = [];
             for ($year = 1; $year <= 3; $year++) {
-                // Calculate predicted income for the year
                 $predictedIncome[$year] = round($averageIncome * pow(1 + $growthRate, $year));
             }
             $predictedAverageIncomeData[$barangay] = $predictedIncome;
         }
 
-        // Pass average income and predicted income to JavaScript
+
+        foreach ($barangays as $barangay) {
+            if (!isset($predictedAverageIncomeData[$barangay])) {
+                $predictedAverageIncomeData[$barangay] = [1 => 0, 2 => 0, 3 => 0];
+            }
+        }
+
+        // Data for the view
         $averageIncomeData = json_encode($barangayAverageIncome);
         $predictedAverageIncomeData = json_encode($predictedAverageIncomeData);
-
 
         $completedClients = Client::where('problem_identification', 'Done')
             ->where('data_gather', 'Done')
@@ -220,7 +211,21 @@ class HomeController extends Controller
         $ongoingClients = Client::where('tracking', '=', 'Re-access')->count();
         $totalSocialWorkers = Social::where('role', 'social-worker')->count();
 
-        return view('home', compact('totalClients', 'closedClients', 'ongoingClients', 'averageIncomeData', 'predictedAverageIncomeData', 'servicePredictions', 'totalFamilyMembers', 'totalSocialWorkers', 'barangays', 'predictedClients', 'monthly_average', 'barangayServiceCounts', 'services'));
+        return view('home', compact(
+            'totalClients',
+            'closedClients',
+            'ongoingClients',
+            'averageIncomeData',
+            'predictedAverageIncomeData',
+            'servicePredictions',
+            'totalFamilyMembers',
+            'totalSocialWorkers',
+            'barangays',
+            'predictedClients',
+            'monthly_average',
+            'barangayServiceCounts',
+            'services'
+        ));
     }
 
 

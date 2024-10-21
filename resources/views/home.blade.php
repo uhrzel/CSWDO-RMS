@@ -179,10 +179,24 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Income per Barangay Prediction</h4>
+                        <h4>Average Income</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="averageIncomeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Prediction Average Income</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="PredictionAverageIncomeChart" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
@@ -524,24 +538,20 @@
     const barangays = @json($barangays);
     const barangayServiceCounts = @json($barangayServiceCounts);
     const servicePredictions = @json($servicePredictions);
-    const averageIncomeData = @json($averageIncomeData); // Pass average income data
-    const predictedAverageIncomeData = @json($predictedAverageIncomeData); // Get predicted income data
 
-
-
-
+    // Check if there are barangays to process
     if (barangays.length > 0) {
         const firstBarangay = barangays[0];
         const services = Object.keys(barangayServiceCounts[firstBarangay]);
 
-
+        // Format service labels
         function formatLabel(service) {
             return service
                 .replace(/_/g, ' ')
                 .replace(/\b\w/g, char => char.toUpperCase());
         }
 
-
+        // Prepare datasets for the service counts
         const datasets = services.map(service => ({
             label: formatLabel(service), // Format service label
             data: barangays.map(barangay => barangayServiceCounts[barangay][service]),
@@ -550,6 +560,7 @@
             borderWidth: 1,
         }));
 
+        // Prepare datasets for service predictions
         const predictionDatasets = services.map(service => ({
             label: `${formatLabel(service)} Predictions`,
             data: barangays.map(barangay => {
@@ -567,9 +578,9 @@
             type: 'line', // Change type for prediction lines
         }));
 
-        // Render the chart
-        const ctxservices = document.getElementById('barangayServiceChart').getContext('2d');
-        const barangayServiceChart = new Chart(ctxservices, {
+        // Render the chart for service counts
+        const ctxServices = document.getElementById('barangayServiceChart').getContext('2d');
+        const barangayServiceChart = new Chart(ctxServices, {
             type: 'bar', // Main chart type
             data: {
                 labels: barangays,
@@ -590,58 +601,115 @@
             },
         });
 
-        console.log(predictedAverageIncomeData);
-        console.log(barangays); // Check barangay names
+        // Prepare data for average income and predictions
+        const averageIncomeData = JSON.parse(@json($averageIncomeData));
+        const predictedAverageIncomeData = JSON.parse(@json($predictedAverageIncomeData));
 
-        const predictedIncomeDatasets = [];
+        // Log the data for debugging
+        console.log('Average Income Data:', averageIncomeData);
+        console.log('Predicted Average Income Data:', predictedAverageIncomeData);
 
-        // Remove the loop for 3 years, only keep the prediction dataset if needed
-        const dataset = {
-            label: 'Predicted Average Income',
-            data: barangays.map(barangay => {
-                if (predictedAverageIncomeData[barangay]) {
-                    console.log(`Income for ${barangay}:`, predictedAverageIncomeData[barangay][1]);
-                    return predictedAverageIncomeData[barangay][1] || 0; // Just get the first year for prediction
-                } else {
-                    console.warn(`No data for barangay: ${barangay}`);
-                    return 0; // Default to 0 if not defined
-                }
-            }),
-            backgroundColor: `rgba(75, 192, 192, 0.2)`,
-            borderColor: `rgba(75, 192, 192, 1)`,
-            borderWidth: 1,
-            type: 'line', // Set to line for prediction
-        };
+        // Get all unique barangay names from both datasets
+        const allBarangays = new Set([
+            ...Object.keys(averageIncomeData),
+            ...Object.keys(predictedAverageIncomeData)
+        ]);
 
-        predictedIncomeDatasets.push(dataset);
+        // Prepare income values for average income
+        const incomeValues = [...allBarangays].map(barangay =>
+            averageIncomeData[barangay] !== undefined ? averageIncomeData[barangay] : null // Default to null
+        );
 
-        // Define incomeDataset based on averageIncomeData
+        // Prepare predicted income values
+        const predectiveIncomeValues = [...allBarangays].map(barangay => {
+            if (predictedAverageIncomeData[barangay]) {
+                const incomes = Object.values(predictedAverageIncomeData[barangay]); // Get income values
+                const averageIncome = incomes.reduce((sum, value) => sum + value, 0) / incomes.length; // Calculate average
+                return averageIncome; // Return the average income
+            }
+            return null; // Default to null if barangay not found
+        });
+
+        // Create the income dataset
         const incomeDataset = {
             label: 'Average Income',
-            data: barangays.map(barangay => averageIncomeData[barangay] || 0),
-            backgroundColor: `rgba(153, 102, 255, 0.2)`,
-            borderColor: `rgba(153, 102, 255, 1)`,
+            data: incomeValues, // Use the income values for the dataset
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1,
+        };
+
+        const predictiveDataSet = {
+            label: 'Predicted Income Per Barangay',
+            data: predectiveIncomeValues, // Use the income values for the dataset
+            backgroundColor: 'rgba(255, 159, 64, 0.2)', // Different color for distinction
+            borderColor: 'rgba(255, 159, 64, 1)',
             borderWidth: 1,
         };
 
         // Render the average income chart
         const ctxIncome = document.getElementById('averageIncomeChart').getContext('2d');
         const averageIncomeChart = new Chart(ctxIncome, {
-            type: 'line', // You can change this to 'line' or 'bar' based on your preference
+            type: 'line',
             data: {
-                labels: barangays,
-                datasets: [incomeDataset, ...predictedIncomeDatasets], // Include the predicted income dataset
+                labels: [...allBarangays],
+                datasets: [incomeDataset],
             },
             options: {
                 responsive: true,
                 scales: {
                     y: {
                         beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Income',
+                        },
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Barangays',
+                        },
                     },
                 },
                 plugins: {
                     legend: {
                         display: true,
+                        position: 'top',
+                    },
+                },
+            },
+        });
+
+        // Render the predicted income chart
+        const ctxIncomepredection = document.getElementById('PredictionAverageIncomeChart').getContext('2d');
+        const averageIncomeChartprediction = new Chart(ctxIncomepredection, {
+            type: 'line',
+            data: {
+                labels: [...allBarangays],
+                datasets: [predictiveDataSet],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Income',
+                        },
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Barangays',
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
                     },
                 },
             },
